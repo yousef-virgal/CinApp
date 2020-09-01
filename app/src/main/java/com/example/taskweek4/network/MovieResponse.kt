@@ -1,4 +1,4 @@
-package com.example.taskweek4.Network
+package com.example.taskweek4.network
 
 import com.google.gson.annotations.SerializedName
 

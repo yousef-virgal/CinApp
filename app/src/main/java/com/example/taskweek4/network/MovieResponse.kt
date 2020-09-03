@@ -22,4 +22,6 @@ data class MovieObject(
     @SerializedName("media_type")
     val mediaType:String,
     @SerializedName("vote_count")
-    val voteCount:Double)
+    val voteCount:Double,
+    @SerializedName("name")
+    val name:String)

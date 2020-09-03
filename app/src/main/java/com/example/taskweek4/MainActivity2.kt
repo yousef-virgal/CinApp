@@ -1,6 +1,5 @@
 package com.example.taskweek4
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.squareup.picasso.Picasso
@@ -14,7 +13,7 @@ class MainActivity2 : AppCompatActivity() {
         bindData()
     }
 
-    fun bindData(){
+    private fun bindData(){
         name.text =intent.getStringExtra("title")
         overViewText.text = intent.getStringExtra("overViewText")
         Picasso.get().load("http://image.tmdb.org/t/p/w500" + intent.getSerializableExtra("Image")).into(

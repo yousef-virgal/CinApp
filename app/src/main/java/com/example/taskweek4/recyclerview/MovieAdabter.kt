@@ -1,23 +1,20 @@
 package com.example.taskweek4.recyclerview
 
-import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.MainActivity2
 import com.example.taskweek4.R
 import com.example.taskweek4.network.MovieObject
 import com.squareup.picasso.Picasso
-import java.io.Serializable
 
 class MovieAdabter(private val movieObjects: List<MovieObject>): RecyclerView.Adapter<MovieAdabter.NormalMovieHolder>() {
 
-    lateinit var intent: Intent
+    private lateinit var intent: Intent
     class NormalMovieHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
         val moviePoster:ImageView = itemView.findViewById(R.id.movie_poster)

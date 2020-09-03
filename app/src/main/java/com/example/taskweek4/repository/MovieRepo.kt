@@ -14,18 +14,20 @@ object MovieRepo {
     private val apiInterface:ApiInterface by lazy {
         retrofitObject!!.create(ApiInterface::class.java)
     }
-
+    lateinit var mediaType:String
     lateinit var movieResponse: MovieResponse
 
-    fun getData(movieCallBack: MovieCallBack){
-        if(this::movieResponse.isInitialized ) {
+    fun getData(movieCallBack: MovieCallBack,currentMediaType:String="movie"){
+        if(this::movieResponse.isInitialized &&currentMediaType == mediaType ) {
             return movieCallBack.isReady(movieResponse)
         }
-        var call:Call<MovieResponse> = apiInterface
-            .getPopulerMovies("movie", "day", apiKey)
+        mediaType = currentMediaType
+        val call:Call<MovieResponse> = apiInterface
+            .getPopulerMovies(currentMediaType, "day", apiKey)
         call.enqueue(object:Callback<MovieResponse>{
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if(response.isSuccessful) {
+                    println(response.body())
                     movieResponse = response.body()!!
                     movieCallBack.isReady(movieResponse)
                 }

@@ -29,8 +29,8 @@
         android:layout_height="wrap_content"
         tools:text="Joker"
         android:id="@+id/movie_name"
-        android:layout_toRightOf="@+id/movie_poster"
-        android:layout_marginLeft="30dp"
+        android:layout_toEndOf="@+id/movie_poster"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="40dp"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -53,19 +53,19 @@
         android:id="@+id/slash"
         android:text="|"
         android:textColor="@android:color/darker_gray"
-        android:layout_toRightOf="@id/movie_genre"
+        android:layout_toEndOf="@id/movie_genre"
         android:layout_below="@+id/movie_name"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="15dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/movie_name"
-        android:layout_toRightOf="@+id/slash"
+        android:layout_toEndOf="@+id/slash"
         tools:text="124 min"
         android:id="@+id/movie_duration"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="15dp"
         android:textSize="15sp"
         />
@@ -75,17 +75,17 @@
         android:background="@drawable/rounded_grey_backgroumd"
         android:layout_below="@+id/movie_genre"
         android:layout_marginTop="15dp"
-        android:layout_toRightOf="@+id/movie_poster"
-        android:layout_marginLeft="30dp"
+        android:layout_toEndOf="@+id/movie_poster"
+        android:layout_marginStart="30dp"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="2D"
+        android:text="2D"
         android:layout_below="@id/movie_genre"
-        android:layout_toRightOf="@+id/movie_poster"
+        android:layout_toEndOf="@+id/movie_poster"
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="36dp"
+        android:layout_marginStart="36dp"
         android:textColor="#448AFF"
         />
 

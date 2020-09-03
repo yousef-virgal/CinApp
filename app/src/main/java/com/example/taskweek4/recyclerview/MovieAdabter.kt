@@ -1,5 +1,6 @@
 package com.example.taskweek4.recyclerview
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +11,14 @@ import com.example.taskweek4.R
 import com.example.taskweek4.network.MovieObject
 import com.squareup.picasso.Picasso
 
-class MovieAdabter(val movieObjects: List<MovieObject>): RecyclerView.Adapter<MovieAdabter.MovieHolder>() {
+class MovieAdabter(private val movieObjects: List<MovieObject>): RecyclerView.Adapter<MovieAdabter.MovieHolder>() {
     class MovieHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         init {
             itemView.setOnClickListener {
-                //TODO create new page
+
             }
         }
-        val moviePoster:ImageView =itemView.findViewById(R.id.movie_poster)
+        val moviePoster:ImageView = itemView.findViewById(R.id.movie_poster)
         val movieName:TextView = itemView.findViewById(R.id.movie_name)
         val movieScore:TextView = itemView.findViewById(R.id.movie_genre)
         val movieType:TextView = itemView.findViewById(R.id.movie_duration)
@@ -29,6 +30,7 @@ class MovieAdabter(val movieObjects: List<MovieObject>): RecyclerView.Adapter<Mo
     }
 
     override fun onBindViewHolder(holder: MovieHolder, position: Int) {
+        println(movieObjects[position])
         holder.movieName.text = movieObjects[position].title
         holder.movieScore.text = movieObjects[position].voteAverage.toString()
         holder.movieType.text = movieObjects[position].mediaType

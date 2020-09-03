@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Task Week 4</string>
+    <string-array name="spinner1">
+        <item>week</item>
+        <item>day</item>
+    </string-array>
+    <string-array name="spinner2">
+        <item>movie</item>
+        <item>tv</item>
+    </string-array>
 </resources>

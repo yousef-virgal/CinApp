@@ -6,6 +6,7 @@
     android:background="#ffffff">
 
     <ImageView
+        android:background="@drawable/rounded_background"
         android:layout_width="wrap_content"
         android:layout_height="510dp"
         android:scaleType="centerCrop"

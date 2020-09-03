@@ -2,6 +2,7 @@ package com.example.taskweek4
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.taskweek4.network.MovieResponse
 import com.example.taskweek4.recyclerview.MovieAdabter

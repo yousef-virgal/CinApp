@@ -14,15 +14,15 @@ object MovieRepo {
     private val apiInterface:ApiInterface by lazy {
         retrofitObject!!.create(ApiInterface::class.java)
     }
-    private val call:Call<MovieResponse> = apiInterface
-        .getPopulerMovies("all","day", apiKey)
+
     lateinit var movieResponse: MovieResponse
 
     fun getData(movieCallBack: MovieCallBack){
-        if(this::movieResponse.isInitialized) {
+        if(this::movieResponse.isInitialized ) {
             return movieCallBack.isReady(movieResponse)
         }
-
+        var call:Call<MovieResponse> = apiInterface
+            .getPopulerMovies("movie", "day", apiKey)
         call.enqueue(object:Callback<MovieResponse>{
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if(response.isSuccessful) {
@@ -30,7 +30,6 @@ object MovieRepo {
                     movieCallBack.isReady(movieResponse)
                 }
             }
-
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
                 t.printStackTrace()
             }

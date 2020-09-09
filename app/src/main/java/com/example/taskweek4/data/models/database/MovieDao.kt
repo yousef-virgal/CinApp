@@ -12,4 +12,6 @@ interface MovieDao {
     fun addMovies(list: List<Movies>)
     @Query("SELECT * FROM Movies")
     fun getMovies():List<Movies>
+    @Query("DELETE FROM Movies")
+    fun deleteAll()
 }

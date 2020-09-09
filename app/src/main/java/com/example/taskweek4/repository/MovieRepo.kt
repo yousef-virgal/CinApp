@@ -2,8 +2,11 @@ package com.example.taskweek4.repository
 
 import android.content.Context
 import com.example.taskweek4.data.models.database.MovieDataBase
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.taskweek4.data.models.network.ApiClient
 import com.example.taskweek4.data.models.network.ApiInterface
+import com.example.taskweek4.data.models.remote.MovieObject
 import com.example.taskweek4.data.models.remote.MovieResponse
 import com.example.taskweek4.data.models.ui.Mapper
 import com.example.taskweek4.data.models.ui.Movies
@@ -26,11 +29,10 @@ object MovieRepo {
     private lateinit var movieDataBase: MovieDataBase
 
 
-    fun getData(movieCallBack: MovieCallBack,currentMediaType:String="movie"){
-        if(this::movieResponse.isInitialized &&currentMediaType == mediaType ) {
-            return movieCallBack.isReady(movieResponse)
-        }
-        mediaType = currentMediaType
+    fun getData(movieCallBack: MovieCallBack,currentMediaType:String="movie")
+    {
+
+
         val call:Call<MovieResponse> = apiInterface
             .getPopulerMovies(currentMediaType, "day", apiKey)
         call.enqueue(object:Callback<MovieResponse>{

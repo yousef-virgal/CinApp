@@ -1,51 +1,85 @@
-package com.example.taskweek4
+package com.example.taskweek4.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.activity.viewModels
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import com.example.taskweek4.recyclerview.MovieAdabter
 import com.example.taskweek4.repository.MovieCallBack
 import kotlinx.android.synthetic.main.movierecyclerview.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.Movies
 import com.example.taskweek4.repository.MovieRepo
+import com.example.taskweek4.ui.MovieViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(),MovieCallBack {
+
+class MainActivity : AppCompatActivity() {
+    private val movieViewModel: MovieViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.movierecyclerview)
+
         displayData()
+        movieViewModel.loadMovieData("movie")
+
+
+        movieViewModel.movieLiveData.observe(
+            this,
+            Observer {
+                bindData(it)
+
+            }
+        )
+
+
         spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                MovieRepo.getData(this@MainActivity,spinner1.selectedItem.toString())
+                movieViewModel.loadMovieData(spinner1.selectedItem.toString())
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
-                MovieRepo.getData(this@MainActivity)
+                movieViewModel.loadMovieData(spinner1.selectedItem.toString())
             }
 
         }
+
+
     }
-    private fun bindData(movies: List<Movies>){
+
+    private fun bindData(movies: List<Movies>) {
         movieRecyclerView.apply {
             adapter = MovieAdabter(movies)
-            layoutManager = LinearLayoutManager(context,RecyclerView.VERTICAL,false)
+            layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
         }
 
     }
 
-    private fun displayData(){
-        val list = ArrayAdapter<String>(this,
-            android.R.layout.simple_list_item_1,resources.getStringArray(R.array.spinner2))
+    private fun displayData() {
+        val list = ArrayAdapter<String>(
+            this,
+            android.R.layout.simple_list_item_1, resources.getStringArray(R.array.spinner2)
+        )
+
         list.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
         spinner1.adapter = list
     }
 
-    override fun isReady(movies: List<Movies>) {
-        bindData(movies)
-    }
+
 }
+
+
+
+
+
+
+
+

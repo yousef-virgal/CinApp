@@ -1,7 +1,8 @@
-package com.example.taskweek4
+package com.example.taskweek4.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.taskweek4.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main2.*
 

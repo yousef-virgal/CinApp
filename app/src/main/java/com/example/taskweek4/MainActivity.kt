@@ -18,21 +18,7 @@ class MainActivity : AppCompatActivity(),MovieCallBack {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.movierecyclerview)
-        val list = ArrayAdapter<String>(this,
-            android.R.layout.simple_list_item_1,resources.getStringArray(R.array.spinner2))
-        list.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner1.adapter = list
         displayData()
-    }
-    private fun bindData(movies: List<Movies>){
-        movieRecyclerView.apply {
-            adapter = MovieAdabter(movies)
-            layoutManager = LinearLayoutManager(context,RecyclerView.VERTICAL,false)
-        }
-
-    }
-
-    private fun displayData(){
         spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 MovieRepo.getData(this@MainActivity,spinner1.selectedItem.toString())
@@ -43,7 +29,20 @@ class MainActivity : AppCompatActivity(),MovieCallBack {
             }
 
         }
+    }
+    private fun bindData(movies: List<Movies>){
+        movieRecyclerView.apply {
+            adapter = MovieAdabter(movies)
+            layoutManager = LinearLayoutManager(context,RecyclerView.VERTICAL,false)
+        }
 
+    }
+
+    private fun displayData(){
+        val list = ArrayAdapter<String>(this,
+            android.R.layout.simple_list_item_1,resources.getStringArray(R.array.spinner2))
+        list.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner1.adapter = list
     }
 
     override fun isReady(movies: List<Movies>) {

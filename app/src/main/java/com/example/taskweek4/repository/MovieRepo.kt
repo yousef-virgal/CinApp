@@ -1,6 +1,7 @@
 package com.example.taskweek4.repository
 
 import android.content.Context
+import com.example.taskweek4.data.models.database.MovieDataBase
 import com.example.taskweek4.data.models.network.ApiClient
 import com.example.taskweek4.data.models.network.ApiInterface
 import com.example.taskweek4.data.models.remote.MovieResponse
@@ -20,11 +21,11 @@ object MovieRepo {
         retrofitObject!!.create(ApiInterface::class.java)
     }
 
-    lateinit var mediaType:String
+    private lateinit var mediaType:String
     lateinit var movieResponse: List<Movies>
+    private lateinit var movieDataBase: MovieDataBase
 
 
-  
     fun getData(movieCallBack: MovieCallBack,currentMediaType:String="movie"){
         if(this::movieResponse.isInitialized &&currentMediaType == mediaType ) {
             return movieCallBack.isReady(movieResponse)
@@ -36,14 +37,20 @@ object MovieRepo {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if(response.isSuccessful) {
                     movieResponse = mapper.mapData(response.body()!!)
+                    movieDataBase.movieDao().addMovies(movieResponse)
                     movieCallBack.isReady(movieResponse)
                 }
             }
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
                 t.printStackTrace()
+                movieCallBack.isReady(movieDataBase.movieDao().getMovies())
             }
         })
 
+    }
+
+    fun createDatabase(context:Context){
+        movieDataBase = MovieDataBase.initializeDataBase(context)
     }
 }
 

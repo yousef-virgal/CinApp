@@ -9,7 +9,7 @@ import com.example.taskweek4.data.models.ui.Movies
 @Database(entities = [Movies::class],version = 1, exportSchema = false)
 abstract class MovieDataBase:RoomDatabase() {
 
-    abstract fun movieDao():List<Movies>
+    abstract fun movieDao():MovieDao
     companion object{
         private var Instance:MovieDataBase? =null
         fun initializeDataBase(context:Context):MovieDataBase{

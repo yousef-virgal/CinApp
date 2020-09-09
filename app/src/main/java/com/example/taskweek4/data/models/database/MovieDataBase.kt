@@ -17,7 +17,7 @@ abstract class MovieDataBase:RoomDatabase() {
                 return Instance!!
             Instance = Room.databaseBuilder(
                 context.applicationContext,
-                MovieDataBase::class.java, "MovieDataBase"
+                MovieDataBase::class.java, "movie_db"
             ).allowMainThreadQueries().build()
             return Instance!!
 

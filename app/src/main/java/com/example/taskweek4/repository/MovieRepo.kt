@@ -2,11 +2,8 @@ package com.example.taskweek4.repository
 
 import android.content.Context
 import com.example.taskweek4.data.models.database.MovieDataBase
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.taskweek4.data.models.network.ApiClient
 import com.example.taskweek4.data.models.network.ApiInterface
-import com.example.taskweek4.data.models.remote.MovieObject
 import com.example.taskweek4.data.models.remote.MovieResponse
 import com.example.taskweek4.data.models.ui.Mapper
 import com.example.taskweek4.data.models.ui.Movies
@@ -24,7 +21,6 @@ object MovieRepo {
         retrofitObject!!.create(ApiInterface::class.java)
     }
 
-    private lateinit var mediaType:String
     lateinit var movieResponse: List<Movies>
     private lateinit var movieDataBase: MovieDataBase
 

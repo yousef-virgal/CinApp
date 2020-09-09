@@ -9,10 +9,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.MainActivity2
 import com.example.taskweek4.R
-import com.example.taskweek4.network.MovieObject
+import com.example.taskweek4.data.models.remote.MovieObject
+import com.example.taskweek4.data.models.ui.Movies
 import com.squareup.picasso.Picasso
 
-class MovieAdabter(private val movieObjects: List<MovieObject>): RecyclerView.Adapter<MovieAdabter.NormalMovieHolder>() {
+class MovieAdabter(private val movies: List<Movies>): RecyclerView.Adapter<MovieAdabter.NormalMovieHolder>() {
 
     private lateinit var intent: Intent
     class NormalMovieHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -35,26 +36,26 @@ class MovieAdabter(private val movieObjects: List<MovieObject>): RecyclerView.Ad
             intent = Intent(holder.itemView.context,MainActivity2::class.java)
 
 
-            intent.putExtra("title", movieObjects[position].title)
-            intent.putExtra("overViewText",movieObjects[position].overview)
-            intent.putExtra("Image",movieObjects[position].backdropPath)
+            intent.putExtra("title", movies[position].title)
+            intent.putExtra("overViewText",movies[position].overview)
+            intent.putExtra("Image",movies[position].backdropPath)
             holder.itemView.context.startActivity(intent)
         }
 
 
-            if (movieObjects[position].mediaType == "movie")
-                holder.movieName.text = movieObjects[position].title
+            if (movies[position].mediaType == "movie")
+                holder.movieName.text = movies[position].title
             else
-                holder.movieName.text = movieObjects[position].name
-            holder.movieScore.text = movieObjects[position].voteAverage.toString()
-            holder.movieType.text = movieObjects[position].mediaType
+                holder.movieName.text = movies[position].name
+            holder.movieScore.text = movies[position].voteAverage.toString()
+            holder.movieType.text = movies[position].mediaType
             Picasso.get()
-                .load("http://image.tmdb.org/t/p/w500" + movieObjects[position].posterPath)
+                .load("http://image.tmdb.org/t/p/w500" + movies[position].posterPath)
                 .into(holder.moviePoster)
         }
 
     override fun getItemCount(): Int {
-        return movieObjects.size
+        return movies.size
     }
 }
 

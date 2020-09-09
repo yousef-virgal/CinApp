@@ -1,4 +1,4 @@
-package com.example.taskweek4.network
+package com.example.taskweek4.data.models.remote
 
 import com.google.gson.annotations.SerializedName
 

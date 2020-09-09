@@ -1,8 +1,10 @@
 package com.example.taskweek4.repository
 
-import com.example.taskweek4.network.ApiClient
-import com.example.taskweek4.network.ApiInterface
-import com.example.taskweek4.network.MovieResponse
+import com.example.taskweek4.data.models.network.ApiClient
+import com.example.taskweek4.data.models.network.ApiInterface
+import com.example.taskweek4.data.models.remote.MovieResponse
+import com.example.taskweek4.data.models.ui.Mapper
+import com.example.taskweek4.data.models.ui.Movies
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -10,12 +12,19 @@ import retrofit2.Response
 object MovieRepo {
 
     private const val apiKey:String = "1ef5bae1f03c43fc90bf2c0e1ee45480"
+
     private val retrofitObject = ApiClient.getRetrofit()
+    private val mapper:Mapper by lazy { Mapper() }
     private val apiInterface:ApiInterface by lazy {
         retrofitObject!!.create(ApiInterface::class.java)
     }
+
     lateinit var mediaType:String
-    lateinit var movieResponse: MovieResponse
+    lateinit var movieResponse: List<Movies>
+
+
+
+
 
     fun getData(movieCallBack: MovieCallBack,currentMediaType:String="movie"){
         if(this::movieResponse.isInitialized &&currentMediaType == mediaType ) {
@@ -27,8 +36,7 @@ object MovieRepo {
         call.enqueue(object:Callback<MovieResponse>{
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if(response.isSuccessful) {
-                    println(response.body())
-                    movieResponse = response.body()!!
+                    movieResponse = mapper.mapData(response.body()!!)
                     movieCallBack.isReady(movieResponse)
                 }
             }
@@ -41,5 +49,5 @@ object MovieRepo {
 }
 
 interface MovieCallBack{
-    fun isReady(movieResponse: MovieResponse)
+    fun isReady(movies:List<Movies>)
 }

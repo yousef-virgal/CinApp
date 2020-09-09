@@ -1,5 +1,6 @@
-package com.example.taskweek4.network
+package com.example.taskweek4.data.models.network
 
+import com.example.taskweek4.data.models.remote.MovieResponse
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

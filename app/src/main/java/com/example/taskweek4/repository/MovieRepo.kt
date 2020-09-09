@@ -1,5 +1,6 @@
 package com.example.taskweek4.repository
 
+import android.content.Context
 import com.example.taskweek4.data.models.network.ApiClient
 import com.example.taskweek4.data.models.network.ApiInterface
 import com.example.taskweek4.data.models.remote.MovieResponse
@@ -23,9 +24,7 @@ object MovieRepo {
     lateinit var movieResponse: List<Movies>
 
 
-
-
-
+  
     fun getData(movieCallBack: MovieCallBack,currentMediaType:String="movie"){
         if(this::movieResponse.isInitialized &&currentMediaType == mediaType ) {
             return movieCallBack.isReady(movieResponse)

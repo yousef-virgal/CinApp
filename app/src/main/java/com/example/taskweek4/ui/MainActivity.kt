@@ -25,18 +25,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        print("Hi")
         setContentView(R.layout.movierecyclerview)
+
+        displayData()
+        movieViewModel.loadMovieData("movie")
+
+
         movieViewModel.movieLiveData.observe(
             this,
             Observer {
-                movieViewModel.loadMovieData(spinner1.selectedItem.toString())
                 bindData(it)
 
             }
         )
-        displayData()
-        movieViewModel.loadMovieData("movie")
+
 
         spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
@@ -49,10 +51,6 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-
-
-
-        print("hello ")
 
     }
 

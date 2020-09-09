@@ -30,28 +30,23 @@ object MovieRepo {
 
 
     fun getData(movieCallBack: MovieCallBack,currentMediaType:String="movie")
-    :LiveData<List<Movies>>{
-        val movieAns : MutableLiveData<List<Movies>> = MutableLiveData()
-        if(this::movieResponse.isInitialized &&currentMediaType == mediaType ) {
-           // return
-            //movieCallBack.isReady(movieResponse)
-        }
-        mediaType = currentMediaType
+    {
+
+
         val call:Call<MovieResponse> = apiInterface
             .getPopulerMovies(currentMediaType, "day", apiKey)
         call.enqueue(object:Callback<MovieResponse>{
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if(response.isSuccessful) {
                     movieResponse = mapper.mapData(response.body()!!)
-                    movieAns.value = movieResponse
-                   // movieCallBack.isReady(movieResponse)
+
+                    movieCallBack.isReady(movieResponse)
                 }
             }
            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
                t.printStackTrace()
            }
        })
-        return movieAns
 
     }
 }

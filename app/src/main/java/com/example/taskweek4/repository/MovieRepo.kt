@@ -1,7 +1,10 @@
 package com.example.taskweek4.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.taskweek4.data.models.network.ApiClient
 import com.example.taskweek4.data.models.network.ApiInterface
+import com.example.taskweek4.data.models.remote.MovieObject
 import com.example.taskweek4.data.models.remote.MovieResponse
 import com.example.taskweek4.data.models.ui.Mapper
 import com.example.taskweek4.data.models.ui.Movies
@@ -26,9 +29,12 @@ object MovieRepo {
 
 
 
-    fun getData(movieCallBack: MovieCallBack,currentMediaType:String="movie"){
+    fun getData(movieCallBack: MovieCallBack,currentMediaType:String="movie")
+    :LiveData<List<Movies>>{
+        val movieAns : MutableLiveData<List<Movies>> = MutableLiveData()
         if(this::movieResponse.isInitialized &&currentMediaType == mediaType ) {
-            return movieCallBack.isReady(movieResponse)
+           // return
+            //movieCallBack.isReady(movieResponse)
         }
         mediaType = currentMediaType
         val call:Call<MovieResponse> = apiInterface
@@ -37,13 +43,15 @@ object MovieRepo {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if(response.isSuccessful) {
                     movieResponse = mapper.mapData(response.body()!!)
-                    movieCallBack.isReady(movieResponse)
+                    movieAns.value = movieResponse
+                   // movieCallBack.isReady(movieResponse)
                 }
             }
-            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                t.printStackTrace()
-            }
-        })
+           override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+               t.printStackTrace()
+           }
+       })
+        return movieAns
 
     }
 }

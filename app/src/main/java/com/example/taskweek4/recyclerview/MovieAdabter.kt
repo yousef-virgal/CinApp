@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.taskweek4.MainActivity2
+import com.example.taskweek4.ui.MainActivity2
 import com.example.taskweek4.R
-import com.example.taskweek4.data.models.remote.MovieObject
 import com.example.taskweek4.data.models.ui.Movies
 import com.squareup.picasso.Picasso
 
@@ -33,7 +32,8 @@ class MovieAdabter(private val movies: List<Movies>): RecyclerView.Adapter<Movie
 
     override fun onBindViewHolder(holder: NormalMovieHolder, position: Int) {
         holder.itemView.setOnClickListener {
-            intent = Intent(holder.itemView.context,MainActivity2::class.java)
+            intent = Intent(holder.itemView.context,
+                MainActivity2::class.java)
 
 
             intent.putExtra("title", movies[position].title)

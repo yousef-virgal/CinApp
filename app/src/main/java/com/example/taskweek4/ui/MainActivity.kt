@@ -6,6 +6,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
         movieViewModel.movieLiveData.observe(
             this,
-            {
+            Observer{
                 bindData(it)
 
             }

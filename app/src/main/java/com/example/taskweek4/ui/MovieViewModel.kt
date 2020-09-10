@@ -37,6 +37,7 @@ fun loadMovieData(spinnerData:String = " "){
 }
     override fun isReady(movies: List<Movies>) {
         movieData = movies
+        _movieLiveData.value = movieData
     }
 
 

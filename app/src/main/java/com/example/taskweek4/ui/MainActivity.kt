@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         movieViewModel.movieLiveData.observe(
             this,
             Observer {
-                movieViewModel.loadMovieData(spinner1.selectedItem.toString())
+
                 bindData(it)
 
             }

@@ -1,23 +1,17 @@
 package com.example.taskweek4.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import com.example.taskweek4.recyclerview.MovieAdabter
-import com.example.taskweek4.repository.MovieCallBack
-import kotlinx.android.synthetic.main.movierecyclerview.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.Movies
-import com.example.taskweek4.repository.MovieRepo
-import com.example.taskweek4.ui.MovieViewModel
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.taskweek4.recyclerview.MovieAdabter
+import kotlinx.android.synthetic.main.movierecyclerview.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -25,18 +19,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        print("Hi")
         setContentView(R.layout.movierecyclerview)
+
+        displayData()
+        movieViewModel.loadMovieData("movie")
+
+
         movieViewModel.movieLiveData.observe(
             this,
-            Observer {
-
+            {
                 bindData(it)
 
             }
         )
-        displayData()
-        movieViewModel.loadMovieData("movie")
+
 
         spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
@@ -50,10 +46,6 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-
-
-        print("hello ")
-
     }
 
     private fun bindData(movies: List<Movies>) {
@@ -65,7 +57,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun displayData() {
-        val list = ArrayAdapter<String>(
+        val list = ArrayAdapter(
             this,
             android.R.layout.simple_list_item_1, resources.getStringArray(R.array.spinner2)
         )

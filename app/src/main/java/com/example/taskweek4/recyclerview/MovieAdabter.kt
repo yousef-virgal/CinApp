@@ -99,6 +99,44 @@ class MovieAdabter(private val movies: List<Movies>): RecyclerView.Adapter<Recyc
             Picasso.get()
                 .load("http://image.tmdb.org/t/p/w500" + movies[position+2].posterPath)
                 .into(holder.moviePoster3)
+
+            holder.moviePoster1.setOnClickListener {
+                    intent = Intent(
+                        holder.itemView.context,
+                        MainActivity2::class.java
+                    )
+
+
+                    intent.putExtra("title", movies[position].title)
+                    intent.putExtra("overViewText", movies[position].overview)
+                    intent.putExtra("Image", movies[position].backdropPath)
+                    holder.itemView.context.startActivity(intent)
+
+            }
+            holder.moviePoster2.setOnClickListener {
+                intent = Intent(
+                    holder.itemView.context,
+                    MainActivity2::class.java
+                )
+
+
+                intent.putExtra("title", movies[position+1].title)
+                intent.putExtra("overViewText", movies[position+1].overview)
+                intent.putExtra("Image", movies[position+1].backdropPath)
+                holder.itemView.context.startActivity(intent)
+            }
+            holder.moviePoster3.setOnClickListener {
+                intent = Intent(
+                    holder.itemView.context,
+                    MainActivity2::class.java
+                )
+
+
+                intent.putExtra("title", movies[position+2].title)
+                intent.putExtra("overViewText", movies[position+2].overview)
+                intent.putExtra("Image", movies[position+2].backdropPath)
+                holder.itemView.context.startActivity(intent)
+            }
         }
     }
 
@@ -116,5 +154,7 @@ class MovieAdabter(private val movies: List<Movies>): RecyclerView.Adapter<Recyc
             NORMAL_VIEW_HOLDER
         }
     }
+
+
 }
 

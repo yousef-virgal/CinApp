@@ -86,7 +86,6 @@ class homeActivity : AppCompatActivity() {
                 page=1
                 movieAdabter.clearData()
                 setRecyclerView()
-                println("aaaa")
                 movieViewModel.loadMovieData(spinner1.selectedItem.toString(),page)
             }
 

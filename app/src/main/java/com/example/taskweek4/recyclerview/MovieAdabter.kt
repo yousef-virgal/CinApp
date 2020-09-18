@@ -18,6 +18,7 @@ class MovieAdabter(private val movies: MutableList<Movies>): RecyclerView.Adapte
     private val nonNormalViewHolder = 0
     private val normalViewHolder =1
     private val loadingViewHolder =2
+    private val blankViewHolder =3
     private var myPosition:Int= 0
 
     class NormalMovieHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -45,14 +46,16 @@ class MovieAdabter(private val movies: MutableList<Movies>): RecyclerView.Adapte
                 return NonNormalMovieHolder(v)
             }
             normalViewHolder -> {
-                if(myPosition == 1||myPosition == 2){
-                    val v: View =
-                        LayoutInflater.from(parent.context).inflate(R.layout.blank, parent, false)
-                    return BlankViewHolder(v)
-                }
+
                 val v: View =
                     LayoutInflater.from(parent.context).inflate(R.layout.design_1, parent, false)
                 return NormalMovieHolder(v)
+            }
+            blankViewHolder->{
+                val v: View =
+                    LayoutInflater.from(parent.context).inflate(R.layout.blank, parent, false)
+                return BlankViewHolder(v)
+
             }
             loadingViewHolder->{
                 val v: View =
@@ -70,7 +73,8 @@ class MovieAdabter(private val movies: MutableList<Movies>): RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is NormalMovieHolder && position != 1 && position != 2) {
+        if (holder is NormalMovieHolder ) {
+            println(position.toString()+"aaaa")
             holder.itemView.setOnClickListener {
                 intent = Intent(
                     holder.itemView.context,
@@ -151,6 +155,9 @@ class MovieAdabter(private val movies: MutableList<Movies>): RecyclerView.Adapte
         return movies.size
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
     fun addData(list: List<Movies>){
         movies.addAll(list)
         notifyDataSetChanged()
@@ -161,13 +168,16 @@ class MovieAdabter(private val movies: MutableList<Movies>): RecyclerView.Adapte
     }
 
     override fun getItemViewType(position: Int): Int {
-        if(movies.isEmpty())
-            return loadingViewHolder
+
         return when (position) {
             0 -> {
                 myPosition = position
                 nonNormalViewHolder
             }
+            1,2->{
+                blankViewHolder
+            }
+
             movies.size - 1 -> {
                 loadingViewHolder
             }

@@ -18,6 +18,7 @@ class homeActivity : AppCompatActivity() {
     private val movieViewModel: MovieViewModel by viewModels()
     private val movieAdabter:MovieAdabter = MovieAdabter(mutableListOf())
     private var page=1
+    private var isFirst =true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,8 +82,10 @@ class homeActivity : AppCompatActivity() {
     private fun spinnerListener(){
         spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                if(page==1)
+                if(isFirst) {
+                    isFirst = false
                     return
+                }
                 page=1
                 movieAdabter.clearData()
                 setRecyclerView()

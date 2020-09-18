@@ -6,7 +6,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
@@ -17,7 +16,7 @@ import kotlinx.android.synthetic.main.movierecyclerview.*
 
 class MainActivity : AppCompatActivity() {
     private val movieViewModel: MovieViewModel by viewModels()
-    private val movieAdabter:MovieAdabter = MovieAdabter(mutableListOf<Movies>())
+    private val movieAdabter:MovieAdabter = MovieAdabter(mutableListOf())
     private var page=1
 
     override fun onCreate(savedInstanceState: Bundle?) {

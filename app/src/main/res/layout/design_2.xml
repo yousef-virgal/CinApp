@@ -8,7 +8,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/firstCardView"
         app:cardCornerRadius="15dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="30dp"
         android:layout_marginStart="20dp"
 
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +28,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/secondCardView"
         app:cardCornerRadius="15dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="30dp"
         android:layout_marginLeft="20dp"
         app:layout_constraintStart_toEndOf="@id/firstCardView"
         app:layout_constraintEnd_toEndOf="parent"

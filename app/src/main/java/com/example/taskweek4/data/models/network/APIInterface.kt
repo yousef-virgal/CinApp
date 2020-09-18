@@ -10,10 +10,11 @@ import retrofit2.http.Query
 
 interface ApiInterface{
     @GET("trending/{media_type}/{time_window}")
-    fun getPopulerMovies(
+    fun getPopularMovies(
         @Path("media_type") mediaType:String,
         @Path("time_window") timeWindow:String,
-        @Query("api_key") apiKey:String
+        @Query("api_key") apiKey:String,
+        @Query("page") page:Int
     ): Call<MovieResponse>
 }
 

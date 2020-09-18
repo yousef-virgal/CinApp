@@ -17,44 +17,55 @@ import kotlinx.android.synthetic.main.movierecyclerview.*
 
 class MainActivity : AppCompatActivity() {
     private val movieViewModel: MovieViewModel by viewModels()
+    private val movieAdabter:MovieAdabter = MovieAdabter(mutableListOf<Movies>())
+    private var page=1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.movierecyclerview)
 
         displayData()
-        movieViewModel.loadMovieData("movie")
+        setRecyclerView()
+        movieViewModel.loadMovieData("movie",page)
 
 
         movieViewModel.movieLiveData.observe(
             this,
-            Observer{
+            {
                 bindData(it)
 
             }
         )
 
+        spinnerListener()
+        scrollListener()
 
-        spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                movieViewModel.loadMovieData(spinner1.selectedItem.toString())
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                movieViewModel.loadMovieData(spinner1.selectedItem.toString())
-            }
-
-        }
 
 
     }
 
     private fun bindData(movies: List<Movies>) {
+        movieAdabter.addData(movies)
+    }
+
+    private fun scrollListener(){
+        movieRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                if(!movieRecyclerView.canScrollVertically(1)&&!movieViewModel.isLoading()){
+                    page++
+                    movieViewModel.loadMovieData(spinner1.selectedItem.toString(),page = page)
+                }
+            }
+
+        })
+    }
+
+
+    private fun setRecyclerView() {
         movieRecyclerView.apply {
-            adapter = MovieAdabter(movies)
+            adapter = movieAdabter
             layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
         }
-
     }
 
     private fun displayData() {
@@ -66,6 +77,24 @@ class MainActivity : AppCompatActivity() {
         list.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         spinner1.adapter = list
+    }
+
+    private fun spinnerListener(){
+        spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                page=1
+                movieAdabter.clearData()
+                setRecyclerView()
+                movieViewModel.loadMovieData(spinner1.selectedItem.toString(),page)
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                page=1
+                movieViewModel.loadMovieData(spinner1.selectedItem.toString(),page)
+            }
+
+        }
+
     }
 
 

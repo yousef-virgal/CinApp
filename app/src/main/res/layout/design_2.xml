@@ -9,12 +9,12 @@
         android:id="@+id/firstCardView"
         app:cardCornerRadius="15dp"
         android:layout_marginTop="70dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_height="510dp"
-        android:layout_width="wrap_content"
+        android:layout_width="184dp"
         app:layout_constraintBottom_toBottomOf="parent">
         <ImageView
             android:id="@+id/firstPoster"
@@ -35,14 +35,16 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginRight="20dp"
         android:layout_height="250dp"
-        android:layout_width="wrap_content"
+        android:layout_width="184dp"
         app:layout_constraintBottom_toTopOf="@id/thirdCardView">
 
         <ImageView
             android:id="@+id/secondPoster"
+            android:minHeight="250dp"
+
             android:layout_width="match_parent"
-            android:layout_height="249dp"
-            android:scaleType="centerCrop"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
             tools:src="@drawable/download" />
     </androidx.cardview.widget.CardView>
 
@@ -57,10 +59,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginRight="20dp"
         android:layout_height="250dp"
-        android:layout_width="wrap_content">
+        android:layout_width="184dp">
         <ImageView
             android:id="@+id/thirdPoster"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:layout_width="match_parent"
             tools:src="@drawable/download"
             android:layout_height="match_parent"/>

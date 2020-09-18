@@ -12,12 +12,13 @@ import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.Movies
 import com.squareup.picasso.Picasso
 
-class MovieAdabter(private val movies: List<Movies>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MovieAdabter(private val movies: MutableList<Movies>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private lateinit var intent: Intent
-    private val NON_NORMAL_VIEW_HOLDER = 0
-    private val NORMAL_VIEW_HOLDER =1
-    private var myPostion:Int= 0
+    private val nonNormalViewHolder = 0
+    private val normalViewHolder =1
+    private val loadingViewHolder =2
+    private var myPosition:Int= 0
 
     class NormalMovieHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
@@ -34,12 +35,17 @@ class MovieAdabter(private val movies: List<Movies>): RecyclerView.Adapter<Recyc
     }
 
     class BlankViewHolder(itemView:View):RecyclerView.ViewHolder(itemView)
-
+    class LoadingViewHolder(itemView: View):RecyclerView.ViewHolder(itemView)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         when (viewType) {
-            1 -> {
-                if(myPostion == 1||myPostion == 2){
+            nonNormalViewHolder -> {
+                val v: View =
+                    LayoutInflater.from(parent.context).inflate(R.layout.design_2, parent, false)
+                return NonNormalMovieHolder(v)
+            }
+            normalViewHolder -> {
+                if(myPosition == 1||myPosition == 2){
                     val v: View =
                         LayoutInflater.from(parent.context).inflate(R.layout.blank, parent, false)
                     return BlankViewHolder(v)
@@ -48,11 +54,12 @@ class MovieAdabter(private val movies: List<Movies>): RecyclerView.Adapter<Recyc
                     LayoutInflater.from(parent.context).inflate(R.layout.design_1, parent, false)
                 return NormalMovieHolder(v)
             }
-            0 -> {
+            loadingViewHolder->{
                 val v: View =
-                    LayoutInflater.from(parent.context).inflate(R.layout.design_2, parent, false)
-                return NonNormalMovieHolder(v)
+                    LayoutInflater.from(parent.context).inflate(R.layout.loading, parent, false)
+                return LoadingViewHolder(v)
             }
+
             else->{
                 val v: View =
                     LayoutInflater.from(parent.context).inflate(R.layout.design_1, parent, false)
@@ -144,17 +151,30 @@ class MovieAdabter(private val movies: List<Movies>): RecyclerView.Adapter<Recyc
         return movies.size
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return if(position == 0){
-            myPostion = position
-            NON_NORMAL_VIEW_HOLDER
-
-        } else {
-            myPostion = position
-            NORMAL_VIEW_HOLDER
-        }
+    fun addData(list: List<Movies>){
+        movies.addAll(list)
+        notifyDataSetChanged()
     }
 
+    fun clearData(){
+        movies.clear()
+    }
 
+    override fun getItemViewType(position: Int): Int {
+        return when (position) {
+            0 -> {
+                myPosition = position
+                nonNormalViewHolder
+            }
+            movies.size - 1 -> {
+                loadingViewHolder
+            }
+            else -> {
+                myPosition = position
+                normalViewHolder
+            }
+        }
+
+    }
 }
 

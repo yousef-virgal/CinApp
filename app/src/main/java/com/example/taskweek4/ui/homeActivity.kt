@@ -14,7 +14,7 @@ import com.example.taskweek4.recyclerview.MovieAdabter
 import kotlinx.android.synthetic.main.movierecyclerview.*
 
 
-class MainActivity : AppCompatActivity() {
+class homeActivity : AppCompatActivity() {
     private val movieViewModel: MovieViewModel by viewModels()
     private val movieAdabter:MovieAdabter = MovieAdabter(mutableListOf())
     private var page=1
@@ -81,15 +81,17 @@ class MainActivity : AppCompatActivity() {
     private fun spinnerListener(){
         spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                if(page==1)
+                    return
                 page=1
                 movieAdabter.clearData()
                 setRecyclerView()
+                println("aaaa")
                 movieViewModel.loadMovieData(spinner1.selectedItem.toString(),page)
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
-                page=1
-                movieViewModel.loadMovieData(spinner1.selectedItem.toString(),page)
+
             }
 
         }

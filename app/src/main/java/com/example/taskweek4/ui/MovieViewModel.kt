@@ -17,7 +17,7 @@ class MovieViewModel(application: Application) : AndroidViewModel(application),M
 
 
     private lateinit var movieData: List<Movies>
-    private var currentSpinner = "movie"
+    private var currentSpinner :String ?=null
     private var currentPage= 1
 
 
@@ -35,7 +35,7 @@ class MovieViewModel(application: Application) : AndroidViewModel(application),M
         }
         currentSpinner = spinnerData
         currentPage = page
-        MovieRepo.getData(this,currentSpinner,page)
+        MovieRepo.getData(this,currentSpinner!!,page)
     }
 
 

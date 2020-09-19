@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.itemActivity" />
+        <activity android:name=".ui.ItemActivity" />
         <activity android:name=".ui.SplashScreen"
             android:theme="@style/Theme.Transparent">
             <intent-filter>

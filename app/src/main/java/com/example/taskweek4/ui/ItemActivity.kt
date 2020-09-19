@@ -7,7 +7,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.movie_intent.*
 
 
-class itemActivity : AppCompatActivity() {
+class ItemActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.movie_intent)

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.taskweek4.ui.itemActivity
+import com.example.taskweek4.ui.ItemActivity
 import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.Movies
 import com.squareup.picasso.Picasso
@@ -78,7 +78,7 @@ class MovieAdabter(private val movies: MutableList<Movies>): RecyclerView.Adapte
             holder.itemView.setOnClickListener {
                 intent = Intent(
                     holder.itemView.context,
-                    itemActivity::class.java
+                    ItemActivity::class.java
                 )
 
 
@@ -114,7 +114,7 @@ class MovieAdabter(private val movies: MutableList<Movies>): RecyclerView.Adapte
             holder.moviePoster1.setOnClickListener {
                     intent = Intent(
                         holder.itemView.context,
-                        itemActivity::class.java
+                        ItemActivity::class.java
                     )
 
 
@@ -127,7 +127,7 @@ class MovieAdabter(private val movies: MutableList<Movies>): RecyclerView.Adapte
             holder.moviePoster2.setOnClickListener {
                 intent = Intent(
                     holder.itemView.context,
-                    itemActivity::class.java
+                    ItemActivity::class.java
                 )
 
 
@@ -139,7 +139,7 @@ class MovieAdabter(private val movies: MutableList<Movies>): RecyclerView.Adapte
             holder.moviePoster3.setOnClickListener {
                 intent = Intent(
                     holder.itemView.context,
-                    itemActivity::class.java
+                    ItemActivity::class.java
                 )
 
 

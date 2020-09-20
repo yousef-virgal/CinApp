@@ -64,19 +64,18 @@ object MovieRepo {
         return isLoading
     }
 
-    fun searchData(movieCallBack: MovieCallBack, query:String){
+    fun searchData(searchCallBack: SearchCallBack, query:String){
         val call:Call<MovieResponse> = apiInterface.searchForMovies(apiKey,query)
         call.enqueue(object : Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if(response.isSuccessful){
                     if(response.body()!!.results.isEmpty()){
                         val message ="No results found "
-                        movieCallBack.failed(message)
+                        searchCallBack.failed(message)
                     }
 
                     searchResponse = mapper.mapData(response.body()!!)
-                    movieDataBase.movieDao().addMovies(searchResponse)
-                    movieCallBack.isReadyHome(searchResponse)
+                    searchCallBack.isReadySearch(searchResponse)
 
                 }
             }
@@ -84,8 +83,8 @@ object MovieRepo {
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
                 t.printStackTrace()
                 val message ="An Error occurred while getting the data "
-                movieCallBack.failed(message)
-                movieCallBack.isReadySearch(movieDataBase.movieDao().getMovies())
+                searchCallBack.failed(message)
+                searchCallBack.isReadySearch(movieDataBase.movieDao().getMovies())
             }
 
         })
@@ -95,5 +94,9 @@ object MovieRepo {
 interface MovieCallBack{
     fun failed(message:String)
     fun isReadyHome(movies:List<Movies>)
+}
+
+interface SearchCallBack{
     fun isReadySearch(movies:List<Movies>)
+    fun failed(message:String)
 }

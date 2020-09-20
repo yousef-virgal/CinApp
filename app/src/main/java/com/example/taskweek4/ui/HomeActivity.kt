@@ -15,15 +15,16 @@ import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.Movies
 import com.example.taskweek4.recyclerview.MovieAdabter
 import kotlinx.android.synthetic.main.mainactivity.*
-class HomeActivity : AppCompatActivity(),MyInterface {
-//    private var text:String = ""
+class HomeActivity : AppCompatActivity(),HomeFragmentInterface,MyInterface {
 
-    private val movieViewModel: MovieViewModel by viewModels()
+
+    private val movieViewModel: HomeActivityViewModel by viewModels()
     private val movieAdabter: MovieAdabter = MovieAdabter(mutableListOf())
     private var page=1
     private var isFirst =true
     private var lastPosition:Int =0
     private lateinit var currentSpinner:String
+
 
 
 
@@ -39,7 +40,7 @@ class HomeActivity : AppCompatActivity(),MyInterface {
 
 
 
-        movieViewModel.loadMovieData("movie",page = page)
+        movieViewModel.loadMovieData("movie", page = page)
 
 
         searchTextListener()
@@ -47,12 +48,11 @@ class HomeActivity : AppCompatActivity(),MyInterface {
         iconListener()
 
         searchText.setOnEditorActionListener(object : TextView.OnEditorActionListener {
-            override fun onEditorAction( v:TextView?, actionId:Int,  event:KeyEvent?): Boolean {
-                if(actionId == EditorInfo.IME_ACTION_DONE) {
+            override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
                     if (searchText.text.isEmpty())
                         return false
                     navController.navigate(R.id.searchFragment)
-                    movieViewModel.searchForData(searchText.text.toString())
                     return true
                 }
                 return false
@@ -71,11 +71,6 @@ class HomeActivity : AppCompatActivity(),MyInterface {
         movieViewModel.errorLiveData.observe(this, {
             Toast.makeText(this, movieViewModel.errorLiveData.value, Toast.LENGTH_SHORT).show()
         })
-
-        movieViewModel.searchLiveData.observe(this,{
-            bindSearchData(it)
-        })
-
 
 
     }
@@ -104,15 +99,15 @@ class HomeActivity : AppCompatActivity(),MyInterface {
         return movieAdabter
     }
 
-    override fun callMovieViewModel(text:String,page:Int) {
-        movieViewModel.loadMovieData(text,page)
+    override fun callMovieViewModel(text: String, page: Int) {
+        movieViewModel.loadMovieData(text, page)
     }
 
     override fun getIsFirst(): Boolean {
         return isFirst
     }
 
-    override fun setIsFirst(input:Boolean) {
+    override fun setIsFirst(input: Boolean) {
         isFirst = input
     }
 
@@ -149,25 +144,29 @@ class HomeActivity : AppCompatActivity(),MyInterface {
         movieAdabter.addData(movies)
     }
 
-    private fun bindSearchData(movies:List<Movies>){
-
+    override fun getText(): String {
+        return searchText.text.toString()
     }
+
 
 }
 
-interface MyInterface{
+interface HomeFragmentInterface{
     fun getAdabter():MovieAdabter
-    fun callMovieViewModel(text:String,page:Int)
+    fun callMovieViewModel(text: String, page: Int)
     fun getIsFirst():Boolean
-    fun setIsFirst(input:Boolean)
+    fun setIsFirst(input: Boolean)
     fun getPageForHomeFragment():Int
-    fun setPageForHomeFragment(input:Int)
+    fun setPageForHomeFragment(input: Int)
     fun callIsLoading():Boolean
-    fun setLastPosition(input:Int)
+    fun setLastPosition(input: Int)
     fun getLastPosition():Int
     fun getSpinner():String
     fun setSpinner(input: String)
+}
 
+interface MyInterface{
+    fun getText():String
 }
 
 

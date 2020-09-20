@@ -9,12 +9,12 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.taskweek4.ui.MyInterface
+import com.example.taskweek4.ui.HomeFragmentInterface
 import kotlinx.android.synthetic.main.fragment_homefragment.*
 
 class Homefragment : Fragment() {
 
-    private lateinit var myInterface: MyInterface
+    private lateinit var myInterface: HomeFragmentInterface
     private var linearLayout=
         LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
 
@@ -25,13 +25,12 @@ class Homefragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        myInterface = context as MyInterface
+        myInterface = context as HomeFragmentInterface
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
 
 
         return inflater.inflate(R.layout.fragment_homefragment, container, false)

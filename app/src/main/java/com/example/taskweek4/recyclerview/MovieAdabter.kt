@@ -74,7 +74,6 @@ class MovieAdabter(private val movies: MutableList<Movies>): RecyclerView.Adapte
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is NormalMovieHolder ) {
-            println(position.toString()+"aaaa")
             holder.itemView.setOnClickListener {
                 intent = Intent(
                     holder.itemView.context,

@@ -16,6 +16,12 @@ interface ApiInterface{
         @Query("api_key") apiKey:String,
         @Query("page") page:Int
     ): Call<MovieResponse>
+
+    @GET("search/multi")
+    fun searchForMovies(
+        @Query("api_key") apiKey:String,
+        @Query ("query") query:String
+    ):Call<MovieResponse>
 }
 
 object ApiClient{

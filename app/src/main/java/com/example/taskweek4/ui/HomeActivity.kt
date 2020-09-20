@@ -5,21 +5,18 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.Movies
 import com.example.taskweek4.recyclerview.MovieAdabter
-import kotlinx.android.synthetic.main.fragment_homefragment.*
 import kotlinx.android.synthetic.main.mainactivity.*
 class HomeActivity : AppCompatActivity(),MyInterface {
-    private var text:String = ""
+//    private var text:String = ""
 
     private val movieViewModel: MovieViewModel by viewModels()
     private val movieAdabter: MovieAdabter = MovieAdabter(mutableListOf())
@@ -55,6 +52,7 @@ class HomeActivity : AppCompatActivity(),MyInterface {
                     if (searchText.text.isEmpty())
                         return false
                     navController.navigate(R.id.searchFragment)
+                    movieViewModel.searchForData(searchText.text.toString())
                     return true
                 }
                 return false
@@ -66,17 +64,25 @@ class HomeActivity : AppCompatActivity(),MyInterface {
         movieViewModel.movieLiveData.observe(
             this,
             {
-                bindData(it)
+                bindHomeData(it)
             }
         )
+
+        movieViewModel.errorLiveData.observe(this, {
+            Toast.makeText(this, movieViewModel.errorLiveData.value, Toast.LENGTH_SHORT).show()
+        })
+
+        movieViewModel.searchLiveData.observe(this,{
+            bindSearchData(it)
+        })
 
 
 
     }
     private fun searchTextListener(){
         searchText.addTextChangedListener {
-            text= it.toString()
-            if(text.isNotEmpty()){
+
+            if(searchText.text.toString().isNotEmpty()){
                 searchIcon.setImageResource(R.drawable.ic_baseline_close_24)
             }
             else{
@@ -87,7 +93,7 @@ class HomeActivity : AppCompatActivity(),MyInterface {
 
     private fun iconListener(){
         searchIcon.setOnClickListener {
-            if(text.isNotEmpty()){
+            if(searchText.text.toString().isNotEmpty()){
                 searchText.text.clear()
             }
         }
@@ -139,8 +145,12 @@ class HomeActivity : AppCompatActivity(),MyInterface {
     }
 
 
-    private fun bindData(movies: List<Movies>) {
+    private fun bindHomeData(movies: List<Movies>) {
         movieAdabter.addData(movies)
+    }
+
+    private fun bindSearchData(movies:List<Movies>){
+
     }
 
 }

@@ -22,6 +22,7 @@ object MovieRepo {
     }
     private var isLoading:Boolean =false
     lateinit var movieResponse: List<Movies>
+    lateinit var searchResponse:List<Movies>
     private lateinit var movieDataBase: MovieDataBase
 
 
@@ -41,13 +42,15 @@ object MovieRepo {
                     movieDataBase.movieDao().deleteAll()
                     movieResponse = mapper.mapData(response.body()!!)
                     movieDataBase.movieDao().addMovies(movieResponse)
-                    movieCallBack.isReady(movieResponse)
+                    movieCallBack.isReadyHome(movieResponse)
                 }
             }
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
                 t.printStackTrace()
                 isLoading =false
-                movieCallBack.isReady(movieDataBase.movieDao().getMovies())
+                val message ="An Error occurred while getting the data "
+                movieCallBack.failed(message)
+                movieCallBack.isReadyHome(movieDataBase.movieDao().getMovies())
             }
         })
 
@@ -60,8 +63,37 @@ object MovieRepo {
     fun isLoading():Boolean{
         return isLoading
     }
+
+    fun searchData(movieCallBack: MovieCallBack, query:String){
+        val call:Call<MovieResponse> = apiInterface.searchForMovies(apiKey,query)
+        call.enqueue(object : Callback<MovieResponse> {
+            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
+                if(response.isSuccessful){
+                    if(response.body()!!.results.isEmpty()){
+                        val message ="No results found "
+                        movieCallBack.failed(message)
+                    }
+
+                    searchResponse = mapper.mapData(response.body()!!)
+                    movieDataBase.movieDao().addMovies(searchResponse)
+                    movieCallBack.isReadyHome(searchResponse)
+
+                }
+            }
+
+            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+                t.printStackTrace()
+                val message ="An Error occurred while getting the data "
+                movieCallBack.failed(message)
+                movieCallBack.isReadySearch(movieDataBase.movieDao().getMovies())
+            }
+
+        })
+    }
 }
 
 interface MovieCallBack{
-    fun isReady(movies:List<Movies>)
+    fun failed(message:String)
+    fun isReadyHome(movies:List<Movies>)
+    fun isReadySearch(movies:List<Movies>)
 }

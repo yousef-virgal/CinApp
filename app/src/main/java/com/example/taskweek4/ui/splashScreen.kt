@@ -24,7 +24,7 @@ class SplashScreen : AppCompatActivity() {
         appSloagan.startAnimation(bottomAnim)
         Handler().postDelayed({
 
-            startActivity(Intent(this,homeActivity::class.java))
+            startActivity(Intent(this,HomeActivity::class.java))
 
             finish()
         }, 4000)

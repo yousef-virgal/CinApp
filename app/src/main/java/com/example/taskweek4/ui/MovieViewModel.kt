@@ -22,6 +22,7 @@ class MovieViewModel(application: Application) : AndroidViewModel(application),M
 
 
 
+
     init {
         MovieRepo.createDatabase(application)
     }
@@ -29,6 +30,7 @@ class MovieViewModel(application: Application) : AndroidViewModel(application),M
 
 
     fun loadMovieData(spinnerData:String ,page:Int){
+
         if (spinnerData == currentSpinner && this::movieData.isInitialized&&page==currentPage) {
             _movieLiveData.value = movieData
             return

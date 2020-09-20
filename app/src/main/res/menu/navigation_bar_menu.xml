@@ -6,8 +6,8 @@
     android:icon="@drawable/ic_baseline_home_24"
     />
     <item
-        android:id="@+id/searchFragment"
-        android:title="Search"
+        android:id="@+id/topRatedFragment"
+        android:title="Top Rated"
         android:icon="@drawable/ic_baseline_search_24"/>
     <item
         android:id="@+id/favouriteFragment"

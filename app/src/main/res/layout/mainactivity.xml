@@ -39,7 +39,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 />
             <EditText
-                android:paddingLeft="30dp"
+                android:imeOptions="actionDone"
+                android:paddingHorizontal="10dp"
                 android:id="@+id/searchText"
                 app:layout_constraintStart_toEndOf="@id/searchIcon"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -48,9 +49,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
-                android:textSize="18sp"
+                android:textSize="16sp"
+                android:textAlignment="center"
+                android:inputType="text"
+
                 android:textColor="@android:color/black"
-                tools:text ="hello"
+                android:hint="Search Data Base"
+
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.example.taskweek4.ui
 
 import android.content.Context
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,21 +11,25 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.Movies
 import com.example.taskweek4.recyclerview.SearchAdapter
+import com.example.taskweek4.searchFragment
 import kotlinx.android.synthetic.main.fragment_homefragment.*
 import kotlinx.android.synthetic.main.fragment_search.*
 
 
 class SearchFragment : Fragment() {
 
-    private val searchViewModel: SearchFragmentViewModel by viewModels()
-    lateinit var myInterface:MyInterface
+    private lateinit var model:SearchFragmentViewModel
+    private lateinit var myInterface: MyInterface
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        model = ViewModelProvider(requireActivity()).get(SearchFragmentViewModel::class.java)
         myInterface = context as MyInterface
 
     }
@@ -37,16 +42,27 @@ class SearchFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        searchViewModel.searchForData(myInterface.getText())
 
-        searchViewModel.errorLiveData.observe(viewLifecycleOwner,
+
+        model.searchForData(myInterface.getText(), model.page)
+
+        setRecyclerView()
+
+        model.errorLiveData.observe(viewLifecycleOwner,
             {
-                Toast.makeText(requireContext(),searchViewModel.errorLiveData.value, Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),model.errorLiveData.value, Toast.LENGTH_SHORT).show()
             })
 
-        searchViewModel.searchLiveData.observe(viewLifecycleOwner,  {
-            setRecyclerView(it)
+        model.searchLiveData.observe(viewLifecycleOwner,  {
+            if(it.isEmpty()) {
+                println("hello")
+                view.visibility = View.GONE
+            }
+            bindSearchData(it)
         })
+
+
+        scrollListener()
 
 
         super.onViewCreated(view, savedInstanceState)
@@ -54,14 +70,34 @@ class SearchFragment : Fragment() {
 
     }
 
-
-
-    private fun setRecyclerView(movies:List<Movies>){
+    private fun bindSearchData(list: List<Movies>){
+        model.searchAdapter.add(list)
+    }
+    private fun setRecyclerView(){
         searchRecyclerView.apply {
-            adapter = SearchAdapter(movies)
+            adapter = model.searchAdapter
             layoutManager = LinearLayoutManager(this.context, RecyclerView.VERTICAL, false)
         }
     }
 
+    private fun scrollListener(){
+
+        searchRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                if(!searchRecyclerView.canScrollVertically(1)&&!(model.isLoadingSearch())) {
+                    model.page = model.page.plus(1)
+                    model.searchForData(myInterface.getText(), model.page)
+                }
+            }
+
+        })
+    }
+
+    override fun onDestroyView() {
+        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_USER
+        model.searchAdapter.clear()
+        model.page =1
+        super.onDestroyView()
+    }
 
 }

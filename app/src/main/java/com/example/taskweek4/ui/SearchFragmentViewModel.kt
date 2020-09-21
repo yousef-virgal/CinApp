@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.taskweek4.data.models.ui.Movies
+import com.example.taskweek4.recyclerview.SearchAdapter
 import com.example.taskweek4.repository.MovieRepo
 import com.example.taskweek4.repository.SearchCallBack
 
@@ -16,16 +17,20 @@ class SearchFragmentViewModel(application: Application): AndroidViewModel(applic
     val errorLiveData: LiveData<String>
         get() = _errorLiveData
     private lateinit var searchData: List<Movies>
-    private var currentSearch:String? =null
+    var currentSearch:String? =null
+    private var currentPage= 1
+    var page:Int = 1
+    val searchAdapter = SearchAdapter(mutableListOf())
 
 
-    fun searchForData(query:String){
-        if(query == currentSearch&& this::searchData.isInitialized) {
+
+    fun searchForData(query:String,page:Int){
+        if(query == currentSearch&& this::searchData.isInitialized&& page == currentPage) {
             _searchLiveData.value = searchData
             return
         }
         currentSearch = query
-        MovieRepo.searchData(this,query)
+        MovieRepo.searchData(this,query,page)
     }
 
     override fun isReadySearch(movies: List<Movies>) {
@@ -35,6 +40,10 @@ class SearchFragmentViewModel(application: Application): AndroidViewModel(applic
 
     override fun failed(message: String) {
         _errorLiveData.value =message
+    }
+
+    fun isLoadingSearch():Boolean{
+        return MovieRepo.isLoadingSearch()
     }
 
 

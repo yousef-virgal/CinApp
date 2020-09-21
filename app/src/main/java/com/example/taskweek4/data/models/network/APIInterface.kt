@@ -20,7 +20,8 @@ interface ApiInterface{
     @GET("search/multi")
     fun searchForMovies(
         @Query("api_key") apiKey:String,
-        @Query ("query") query:String
+        @Query ("query") query:String,
+        @Query("page") page:Int
     ):Call<MovieResponse>
 }
 

@@ -1,6 +1,7 @@
 package com.example.taskweek4.ui
 
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
@@ -15,15 +16,14 @@ import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.Movies
 import com.example.taskweek4.recyclerview.MovieAdabter
 import kotlinx.android.synthetic.main.mainactivity.*
-class HomeActivity : AppCompatActivity(),HomeFragmentInterface,MyInterface {
+class HomeActivity : AppCompatActivity(),MyInterface {
 
 
     private val movieViewModel: HomeActivityViewModel by viewModels()
-    private val movieAdabter: MovieAdabter = MovieAdabter(mutableListOf())
-    private var page=1
-    private var isFirst =true
-    private var lastPosition:Int =0
-    private lateinit var currentSpinner:String
+    private val searchViewModel: SearchFragmentViewModel by viewModels()
+
+
+
 
 
 
@@ -40,7 +40,7 @@ class HomeActivity : AppCompatActivity(),HomeFragmentInterface,MyInterface {
 
 
 
-        movieViewModel.loadMovieData("movie", page = page)
+        movieViewModel.loadMovieData("movie",movieViewModel.page)
 
 
         searchTextListener()
@@ -52,6 +52,11 @@ class HomeActivity : AppCompatActivity(),HomeFragmentInterface,MyInterface {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     if (searchText.text.isEmpty())
                         return false
+                    if(searchText.text.toString()!=searchViewModel.currentSearch) {
+                        searchViewModel.page = 1
+                        searchViewModel.searchAdapter.clear()
+                    }
+                    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
                     navController.navigate(R.id.searchFragment)
                     return true
                 }
@@ -61,16 +66,9 @@ class HomeActivity : AppCompatActivity(),HomeFragmentInterface,MyInterface {
 
         })
 
-        movieViewModel.movieLiveData.observe(
-            this,
-            {
-                bindHomeData(it)
-            }
-        )
 
-        movieViewModel.errorLiveData.observe(this, {
-            Toast.makeText(this, movieViewModel.errorLiveData.value, Toast.LENGTH_SHORT).show()
-        })
+
+
 
 
     }
@@ -94,75 +92,11 @@ class HomeActivity : AppCompatActivity(),HomeFragmentInterface,MyInterface {
         }
     }
 
-    override fun getAdabter():MovieAdabter {
-
-        return movieAdabter
-    }
-
-    override fun callMovieViewModel(text: String, page: Int) {
-        movieViewModel.loadMovieData(text, page)
-    }
-
-    override fun getIsFirst(): Boolean {
-        return isFirst
-    }
-
-    override fun setIsFirst(input: Boolean) {
-        isFirst = input
-    }
-
-    override fun getPageForHomeFragment(): Int {
-        return page
-    }
-
-    override fun setPageForHomeFragment(input: Int) {
-        page= input
-    }
-
-    override fun callIsLoading():Boolean {
-        return movieViewModel.isLoading()
-    }
-
-    override fun setLastPosition(input: Int) {
-        lastPosition = input
-    }
-
-    override fun getLastPosition(): Int {
-        return lastPosition
-    }
-
-    override fun getSpinner(): String {
-        return currentSpinner
-    }
-
-    override fun setSpinner(input: String) {
-        currentSpinner =input
-    }
-
-
-    private fun bindHomeData(movies: List<Movies>) {
-        movieAdabter.addData(movies)
-    }
 
     override fun getText(): String {
         return searchText.text.toString()
     }
 
-
-}
-
-interface HomeFragmentInterface{
-    fun getAdabter():MovieAdabter
-    fun callMovieViewModel(text: String, page: Int)
-    fun getIsFirst():Boolean
-    fun setIsFirst(input: Boolean)
-    fun getPageForHomeFragment():Int
-    fun setPageForHomeFragment(input: Int)
-    fun callIsLoading():Boolean
-    fun setLastPosition(input: Int)
-    fun getLastPosition():Int
-    fun getSpinner():String
-    fun setSpinner(input: String)
 }
 
 interface MyInterface{

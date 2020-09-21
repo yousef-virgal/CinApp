@@ -8,6 +8,9 @@ import com.example.taskweek4.repository.MovieCallBack
 import com.example.taskweek4.repository.MovieRepo
 import android.app.Application
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.taskweek4.recyclerview.MovieAdabter
 
 class HomeActivityViewModel(application: Application) : AndroidViewModel(application),MovieCallBack
 {
@@ -21,10 +24,12 @@ class HomeActivityViewModel(application: Application) : AndroidViewModel(applica
 
     private lateinit var movieData: List<Movies>
 
-    private var currentSpinner :String ?=null
+    var currentSpinner :String ?=null
     private var currentPage= 1
-
-
+    var lastPosition:Int =0
+    var page=1
+    var isFirst =true
+    var isFirstCreation =false
 
 
     init {
@@ -57,7 +62,8 @@ class HomeActivityViewModel(application: Application) : AndroidViewModel(applica
 
 
     fun isLoading():Boolean{
-        return MovieRepo.isLoading()
+        return MovieRepo.isLoadingHome()
     }
+
 
 }

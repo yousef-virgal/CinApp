@@ -1,6 +1,7 @@
 package com.example.taskweek4.repository
 
 import android.content.Context
+import androidx.lifecycle.MutableLiveData
 import com.example.taskweek4.data.models.database.MovieDataBase
 import com.example.taskweek4.data.models.network.ApiClient
 import com.example.taskweek4.data.models.network.ApiInterface
@@ -20,7 +21,8 @@ object MovieRepo {
     private val apiInterface:ApiInterface by lazy {
         retrofitObject!!.create(ApiInterface::class.java)
     }
-    private var isLoading:Boolean =false
+    private var isLoadingHome:Boolean =false
+    private var isLoadingSearch:Boolean =false
     lateinit var movieResponse: List<Movies>
     lateinit var searchResponse:List<Movies>
     private lateinit var movieDataBase: MovieDataBase
@@ -28,9 +30,9 @@ object MovieRepo {
 
     fun getData(movieCallBack: MovieCallBack,currentMediaType:String="movie",page:Int)
     {
-        isLoading =true
+        isLoadingHome =true
         if(page>1000){
-            isLoading=false
+            isLoadingHome=false
             return
         }
         val call:Call<MovieResponse> = apiInterface
@@ -38,7 +40,7 @@ object MovieRepo {
         call.enqueue(object:Callback<MovieResponse>{
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if(response.isSuccessful) {
-                    isLoading=false
+                    isLoadingHome=false
                     movieDataBase.movieDao().deleteAll()
                     movieResponse = mapper.mapData(response.body()!!)
                     movieDataBase.movieDao().addMovies(movieResponse)
@@ -47,7 +49,7 @@ object MovieRepo {
             }
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
                 t.printStackTrace()
-                isLoading =false
+                isLoadingHome =false
                 val message ="An Error occurred while getting the data "
                 movieCallBack.failed(message)
                 movieCallBack.isReadyHome(movieDataBase.movieDao().getMovies())
@@ -60,27 +62,42 @@ object MovieRepo {
         movieDataBase = MovieDataBase.initializeDataBase(context)
     }
 
-    fun isLoading():Boolean{
-        return isLoading
+    fun isLoadingHome():Boolean{
+        return isLoadingHome
+    }
+    fun isLoadingSearch():Boolean{
+        return isLoadingSearch
     }
 
-    fun searchData(searchCallBack: SearchCallBack, query:String){
-        val call:Call<MovieResponse> = apiInterface.searchForMovies(apiKey,query)
+    fun searchData(searchCallBack: SearchCallBack, query:String,page:Int){
+        isLoadingSearch= true
+        val call:Call<MovieResponse> = apiInterface.searchForMovies(apiKey,query,page)
         call.enqueue(object : Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if(response.isSuccessful){
+                    isLoadingSearch =false
                     if(response.body()!!.results.isEmpty()){
-                        val message ="No results found "
-                        searchCallBack.failed(message)
+                        if(page==1) {
+                            val message = "No results found"
+                            searchCallBack.failed(message)
+                            return
+                        }
+                        else {
+                            val message = "No more Results"
+                            searchCallBack.failed(message)
+                            return
+                        }
                     }
-
                     searchResponse = mapper.mapData(response.body()!!)
+                    println(searchResponse)
                     searchCallBack.isReadySearch(searchResponse)
+                    return
 
                 }
             }
 
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+                isLoadingSearch=false
                 t.printStackTrace()
                 val message ="An Error occurred while getting the data "
                 searchCallBack.failed(message)

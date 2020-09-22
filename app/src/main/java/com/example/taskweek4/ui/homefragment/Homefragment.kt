@@ -1,4 +1,4 @@
-package com.example.taskweek4
+package com.example.taskweek4.ui.homefragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,16 +11,16 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.Movies
 import com.example.taskweek4.recyclerview.MovieAdabter
-import com.example.taskweek4.ui.HomeActivityViewModel
 import kotlinx.android.synthetic.main.fragment_homefragment.*
 
 class Homefragment : Fragment() {
 
-    lateinit var model:HomeActivityViewModel
+    lateinit var model: HomeActivityViewModel
     private val linearLayout = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-    private val movieAdabter: MovieAdabter = MovieAdabter(mutableListOf())
+
 
 
 
@@ -37,10 +37,9 @@ class Homefragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         model = ViewModelProvider(requireActivity()).get(HomeActivityViewModel::class.java)
 
-        displayData()
-
+         displayData()
         setRecyclerView()
-        spinnerListener()
+//        spinnerListener()
 
         model.movieLiveData.observe(
             requireActivity(),
@@ -58,10 +57,6 @@ class Homefragment : Fragment() {
 
     }
 
-
-
-
-
     private fun displayData() {
         val list = ArrayAdapter(
             requireContext(),
@@ -76,28 +71,28 @@ class Homefragment : Fragment() {
 
 
 
-    private fun spinnerListener(){
-        spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                if(model.isFirst) {
-                    model.isFirst = false
-                    return
-                }
-                if(model.isFirstCreation) {
-                    return
-                }
-                model.page=1
-                movieAdabter.clearData()
-                model.loadMovieData(spinner1.selectedItem.toString(),model.page)
-
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
-
-        }
-
-    }
+//    private fun spinnerListener(){
+//        spinner1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//                if(model.isFirst) {
+//                    model.isFirst = false
+//                    return
+//                }
+//                if(model.isFirstCreation) {
+//                    return
+//                }
+//                model.page=1
+//                model.movieAdapter.clearData()
+//                model.loadMovieData(spinner1.selectedItem.toString(),model.page)
+//
+//            }
+//
+//            override fun onNothingSelected(p0: AdapterView<*>?) {
+//            }
+//
+//        }
+//
+//    }
 
 
     private fun scrollListener(){
@@ -116,14 +111,18 @@ class Homefragment : Fragment() {
 
     private fun setRecyclerView() {
         movieRecyclerView.apply {
-                adapter = movieAdabter
-                layoutManager = linearLayout
+//            adapter = if(model.isFirstCreation)
+//                MovieAdabter(mutableListOf())
+//            else
+                adapter=model.movieAdapter
+            layoutManager = linearLayout
+
         }
         movieRecyclerView.scrollToPosition(model.lastPosition)
     }
 
     private fun bindHomeData(movies: List<Movies>) {
-        movieAdabter.addData(movies)
+        model.movieAdapter.addData(movies)
     }
 
     override fun onDestroyView() {

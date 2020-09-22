@@ -1,14 +1,13 @@
 package com.example.taskweek4.recyclerview
 
 import android.content.Intent
-import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.Movies
-import com.example.taskweek4.ui.ItemActivity
+import com.example.taskweek4.ui.Activity.ItemActivity
 import com.squareup.picasso.Picasso
 
 

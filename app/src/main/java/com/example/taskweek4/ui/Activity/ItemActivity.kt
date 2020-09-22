@@ -1,4 +1,4 @@
-package com.example.taskweek4.ui
+package com.example.taskweek4.ui.Activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

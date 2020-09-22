@@ -1,4 +1,4 @@
-package com.example.taskweek4.ui
+package com.example.taskweek4.ui.searchFragment
 
 import android.content.Context
 import android.content.pm.ActivityInfo
@@ -8,23 +8,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.Movies
-import com.example.taskweek4.recyclerview.SearchAdapter
-import com.example.taskweek4.searchFragment
-import kotlinx.android.synthetic.main.fragment_homefragment.*
+import com.example.taskweek4.ui.Activity.MyInterface
 import kotlinx.android.synthetic.main.fragment_search.*
 
 
 class SearchFragment : Fragment() {
 
-    private lateinit var model:SearchFragmentViewModel
+    private lateinit var model: SearchFragmentViewModel
     private lateinit var myInterface: MyInterface
 
     override fun onAttach(context: Context) {

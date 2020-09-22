@@ -23,13 +23,13 @@ object MovieRepo {
     }
     private var isLoadingHome:Boolean =false
     private var isLoadingSearch:Boolean =false
+    private var isLoadingTopRated:Boolean =false
     lateinit var movieResponse: List<Movies>
     lateinit var searchResponse:List<Movies>
     private lateinit var movieDataBase: MovieDataBase
 
 
-    fun getData(movieCallBack: MovieCallBack,currentMediaType:String="movie",page:Int)
-    {
+    fun getData(movieCallBack: MovieCallBack,currentMediaType:String="movie",page:Int) {
         isLoadingHome =true
         if(page>1000){
             isLoadingHome=false
@@ -37,6 +37,7 @@ object MovieRepo {
         }
         val call:Call<MovieResponse> = apiInterface
             .getPopularMovies(currentMediaType, "day", apiKey,page)
+
         call.enqueue(object:Callback<MovieResponse>{
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if(response.isSuccessful) {
@@ -67,6 +68,9 @@ object MovieRepo {
     }
     fun isLoadingSearch():Boolean{
         return isLoadingSearch
+    }
+    fun isLoadingToprated():Boolean{
+        return isLoadingTopRated
     }
 
     fun searchData(searchCallBack: SearchCallBack, query:String,page:Int){
@@ -106,6 +110,34 @@ object MovieRepo {
 
         })
     }
+
+    fun getTopRated(topRatedCallback: TopRatedCallBack,page:Int){
+        isLoadingTopRated =true
+        if(page>1000){
+            isLoadingTopRated=false
+            return
+        }
+        val call:Call<MovieResponse> = apiInterface.getTopRated(apiKey,page)
+        call.enqueue(object:Callback<MovieResponse>{
+            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
+                if(response.isSuccessful) {
+                    isLoadingTopRated=false
+                    movieDataBase.movieDao().deleteAll()
+                    movieResponse = mapper.mapData(response.body()!!)
+                    movieDataBase.movieDao().addMovies(movieResponse)
+                    topRatedCallback.isReadyTopRated(movieResponse)
+                }
+            }
+            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+                t.printStackTrace()
+                isLoadingTopRated=false
+                val message ="An Error occurred while getting the data "
+                topRatedCallback.failed(message)
+                topRatedCallback.isReadyTopRated(movieDataBase.movieDao().getMovies())
+            }
+        })
+
+    }
 }
 
 interface MovieCallBack{
@@ -116,4 +148,9 @@ interface MovieCallBack{
 interface SearchCallBack{
     fun isReadySearch(movies:List<Movies>)
     fun failed(message:String)
+}
+
+interface TopRatedCallBack {
+    fun isReadyTopRated(movies:List<Movies>)
+    fun failed(message: String)
 }

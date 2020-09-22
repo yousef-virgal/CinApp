@@ -1,4 +1,4 @@
-package com.example.taskweek4.ui
+package com.example.taskweek4.ui.searchFragment
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

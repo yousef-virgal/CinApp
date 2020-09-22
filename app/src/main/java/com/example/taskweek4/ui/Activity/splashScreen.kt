@@ -1,4 +1,4 @@
-package com.example.taskweek4.ui
+package com.example.taskweek4.ui.Activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -24,7 +24,7 @@ class SplashScreen : AppCompatActivity() {
         appSloagan.startAnimation(bottomAnim)
         Handler().postDelayed({
 
-            startActivity(Intent(this,HomeActivity::class.java))
+            startActivity(Intent(this, HomeActivity::class.java))
 
             finish()
         }, 4000)

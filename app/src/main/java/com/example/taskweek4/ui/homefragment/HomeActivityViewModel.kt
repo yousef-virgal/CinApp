@@ -1,4 +1,4 @@
-package com.example.taskweek4.ui
+package com.example.taskweek4.ui.homefragment
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,9 +7,6 @@ import com.example.taskweek4.data.models.ui.Movies
 import com.example.taskweek4.repository.MovieCallBack
 import com.example.taskweek4.repository.MovieRepo
 import android.app.Application
-import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.recyclerview.MovieAdabter
 
 class HomeActivityViewModel(application: Application) : AndroidViewModel(application),MovieCallBack
@@ -17,6 +14,7 @@ class HomeActivityViewModel(application: Application) : AndroidViewModel(applica
 
     private val _movieLiveData : MutableLiveData<List<Movies>> by lazy { MutableLiveData<List<Movies>>() }
     private val _errorLiveData : MutableLiveData<String> by lazy { MutableLiveData<String>() }
+    private val movieList:MutableList<Movies> = mutableListOf()
     val movieLiveData: LiveData<List<Movies>>
         get() = _movieLiveData
     val errorLiveData: LiveData<String>
@@ -30,6 +28,7 @@ class HomeActivityViewModel(application: Application) : AndroidViewModel(applica
     var page=1
     var isFirst =true
     var isFirstCreation =false
+    val movieAdapter: MovieAdabter = MovieAdabter(mutableListOf())
 
 
     init {
@@ -57,6 +56,7 @@ class HomeActivityViewModel(application: Application) : AndroidViewModel(applica
 
     override fun isReadyHome(movies: List<Movies>) {
         movieData = movies
+        movieList.addAll(movies)
         _movieLiveData.value =movieData
     }
 

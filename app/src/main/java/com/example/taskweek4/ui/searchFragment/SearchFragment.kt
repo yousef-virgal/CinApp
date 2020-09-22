@@ -48,13 +48,7 @@ class SearchFragment : Fragment() {
                 Toast.makeText(requireContext(),model.errorLiveData.value, Toast.LENGTH_SHORT).show()
             })
 
-        model.searchLiveData.observe(viewLifecycleOwner,  {
-            if(it.isEmpty()) {
-                println("hello")
-                view.visibility = View.GONE
-            }
-            bindSearchData(it)
-        })
+
 
 
         scrollListener()
@@ -65,9 +59,7 @@ class SearchFragment : Fragment() {
 
     }
 
-    private fun bindSearchData(list: List<Movies>){
-        model.searchAdapter.add(list)
-    }
+
     private fun setRecyclerView(){
         searchRecyclerView.apply {
             adapter = model.searchAdapter

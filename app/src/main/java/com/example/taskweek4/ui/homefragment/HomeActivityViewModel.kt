@@ -7,6 +7,8 @@ import com.example.taskweek4.data.models.ui.Movies
 import com.example.taskweek4.repository.MovieCallBack
 import com.example.taskweek4.repository.MovieRepo
 import android.app.Application
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.recyclerview.MovieAdabter
 
 class HomeActivityViewModel(application: Application) : AndroidViewModel(application),MovieCallBack
@@ -29,6 +31,7 @@ class HomeActivityViewModel(application: Application) : AndroidViewModel(applica
     var isFirst =true
     var isFirstCreation =false
     val movieAdapter: MovieAdabter = MovieAdabter(mutableListOf())
+
 
 
     init {

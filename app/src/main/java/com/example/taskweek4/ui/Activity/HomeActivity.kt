@@ -11,8 +11,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
+import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
+import com.example.taskweek4.data.models.ui.Movies
 import com.example.taskweek4.ui.homefragment.HomeActivityViewModel
+import com.example.taskweek4.ui.homefragment.HomeFragment
 import com.example.taskweek4.ui.searchFragment.SearchFragmentViewModel
 import com.example.taskweek4.ui.topRatedFragment.TopRatedViewModel
 import kotlinx.android.synthetic.main.mainactivity.*
@@ -22,6 +25,8 @@ class HomeActivity : AppCompatActivity(), MyInterface {
     private val movieViewModel: HomeActivityViewModel by viewModels()
     private val searchViewModel: SearchFragmentViewModel by viewModels()
     private val topRatedViewModel: TopRatedViewModel by viewModels()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,12 +39,30 @@ class HomeActivity : AppCompatActivity(), MyInterface {
 
 
 
-
         movieViewModel.loadMovieData("movie",movieViewModel.page)
         topRatedViewModel.loadTopRatedData(movieViewModel.page)
 
 
+
         searchTextListener()
+
+        movieViewModel.movieLiveData.observe(
+            this,
+            {
+                bindHomeData(it)
+            }
+        )
+
+        topRatedViewModel.topRatedLiveData.observe(
+            this,
+            {
+                bindTopRatedData(it)
+            }
+        )
+
+        searchViewModel.searchLiveData.observe(this,  {
+            bindSearchData(it)
+        })
 
         iconListener()
 
@@ -87,6 +110,15 @@ class HomeActivity : AppCompatActivity(), MyInterface {
 
     override fun getText(): String {
         return searchText.text.toString()
+    }
+    private fun bindHomeData(movies: List<Movies>) {
+        movieViewModel.movieAdapter.addData(movies)
+    }
+    private fun bindTopRatedData(movies: List<Movies>) {
+        topRatedViewModel.movieAdapter.addData(movies)
+    }
+    private fun bindSearchData(list: List<Movies>){
+        searchViewModel.searchAdapter.add(list)
     }
 
 }

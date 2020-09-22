@@ -16,37 +16,28 @@ import com.example.taskweek4.data.models.ui.Movies
 import com.example.taskweek4.recyclerview.MovieAdabter
 import kotlinx.android.synthetic.main.fragment_homefragment.*
 
-class Homefragment : Fragment() {
+class HomeFragment : Fragment() {
 
     lateinit var model: HomeActivityViewModel
-    private val linearLayout = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-
-
-
+    val linearLayout = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-
         return inflater.inflate(R.layout.fragment_homefragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        model = ViewModelProvider(requireActivity()).get(HomeActivityViewModel::class.java)
 
+        model = ViewModelProvider(requireActivity()).get(HomeActivityViewModel::class.java)
          displayData()
-        setRecyclerView()
+            setRecyclerView()
 //        spinnerListener()
 
-        model.movieLiveData.observe(
-            requireActivity(),
-            {
-                bindHomeData(it)
-            }
-        )
+
 
         model.errorLiveData.observe(viewLifecycleOwner, {
             Toast.makeText(context, model.errorLiveData.value, Toast.LENGTH_SHORT).show()
@@ -114,20 +105,21 @@ class Homefragment : Fragment() {
 //            adapter = if(model.isFirstCreation)
 //                MovieAdabter(mutableListOf())
 //            else
-                adapter=model.movieAdapter
+            adapter=model.movieAdapter
+
             layoutManager = linearLayout
 
         }
         movieRecyclerView.scrollToPosition(model.lastPosition)
     }
 
-    private fun bindHomeData(movies: List<Movies>) {
-        model.movieAdapter.addData(movies)
-    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
         model.isFirstCreation= true
+
     }
+
 
 }

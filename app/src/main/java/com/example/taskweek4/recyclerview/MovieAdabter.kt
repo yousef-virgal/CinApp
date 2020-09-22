@@ -164,6 +164,9 @@ class MovieAdabter(private val movies: MutableList<Movies>): RecyclerView.Adapte
         movies.clear()
     }
 
+
+
+
     override fun getItemViewType(position: Int): Int {
 
         return when (position) {

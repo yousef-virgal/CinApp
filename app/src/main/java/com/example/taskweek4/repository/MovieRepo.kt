@@ -1,7 +1,6 @@
 package com.example.taskweek4.repository
 
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
 import com.example.taskweek4.data.models.database.MovieDataBase
 import com.example.taskweek4.data.models.network.ApiClient
 import com.example.taskweek4.data.models.network.ApiInterface

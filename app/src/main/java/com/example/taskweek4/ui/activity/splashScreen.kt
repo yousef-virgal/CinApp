@@ -1,4 +1,4 @@
-package com.example.taskweek4.ui.Activity
+package com.example.taskweek4.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.splashscreen.*
 class SplashScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        @Suppress("DEPRECATION")
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
 
         val topAnim = AnimationUtils.loadAnimation(this,R.anim.top_animation)
@@ -22,6 +23,7 @@ class SplashScreen : AppCompatActivity() {
         appLogo.startAnimation(topAnim)
         appName.startAnimation(bottomAnim)
         appSloagan.startAnimation(bottomAnim)
+        @Suppress("DEPRECATION")
         Handler().postDelayed({
 
             startActivity(Intent(this, HomeActivity::class.java))

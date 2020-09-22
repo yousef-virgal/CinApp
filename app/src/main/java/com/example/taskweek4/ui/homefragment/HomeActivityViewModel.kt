@@ -2,13 +2,10 @@ package com.example.taskweek4.ui.homefragment
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-
 import com.example.taskweek4.data.models.ui.Movies
 import com.example.taskweek4.repository.MovieCallBack
 import com.example.taskweek4.repository.MovieRepo
 import android.app.Application
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.recyclerview.MovieAdabter
 
 class HomeActivityViewModel(application: Application) : AndroidViewModel(application),MovieCallBack

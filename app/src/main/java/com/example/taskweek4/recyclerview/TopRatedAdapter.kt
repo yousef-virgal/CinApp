@@ -4,15 +4,13 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.Movies
-import com.example.taskweek4.ui.Activity.ItemActivity
+import com.example.taskweek4.ui.activity.ItemActivity
 import com.squareup.picasso.Picasso
 import com.synnapps.carouselview.CarouselView
-import com.synnapps.carouselview.ImageClickListener
-import com.synnapps.carouselview.ImageListener
+
 
 class TopRatedAdapter(val movies:MutableList<Movies>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var intent: Intent
@@ -22,7 +20,7 @@ class TopRatedAdapter(val movies:MutableList<Movies>): RecyclerView.Adapter<Recy
     private val loadingViewHolder:Int =2
     private val carouselViewHolder:Int = 3
     private val blankViewHolder:Int = 4
-    private lateinit var list:List<Int>
+    private val movieText:String = "movie"
 
     class TopRatedVieHolder(itemView: View): RecyclerView.ViewHolder(itemView)
     class CarouselViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -69,14 +67,14 @@ class TopRatedAdapter(val movies:MutableList<Movies>): RecyclerView.Adapter<Recy
                     .into(imageView)
             }
 
-            holder.carousel.setImageClickListener { position ->
+            holder.carousel.setImageClickListener { myPosition ->
                 intent = Intent(
                     holder.itemView.context,
                     ItemActivity::class.java
                 )
-                intent.putExtra("title", movies[position].title)
-                intent.putExtra("overViewText", movies[position].overview)
-                intent.putExtra("Image", movies[position].backdropPath)
+                intent.putExtra("title", movies[myPosition].title)
+                intent.putExtra("overViewText", movies[myPosition].overview)
+                intent.putExtra("Image", movies[myPosition].backdropPath)
                 holder.itemView.context.startActivity(intent)
             }
         }
@@ -96,7 +94,7 @@ class TopRatedAdapter(val movies:MutableList<Movies>): RecyclerView.Adapter<Recy
 
             holder.movieName.text = movies[position-1].title
             holder.movieScore.text = movies[position-1].voteAverage.toString()
-            holder.movieType.text = "movie"
+            holder.movieType.text = movieText
             Picasso.get()
                 .load("http://image.tmdb.org/t/p/w500" + movies[position-1].posterPath)
                 .into(holder.moviePoster)

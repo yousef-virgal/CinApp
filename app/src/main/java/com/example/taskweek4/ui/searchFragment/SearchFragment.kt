@@ -12,8 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
-import com.example.taskweek4.data.models.ui.Movies
-import com.example.taskweek4.ui.Activity.MyInterface
+import com.example.taskweek4.ui.activity.MyInterface
 import kotlinx.android.synthetic.main.fragment_search.*
 
 

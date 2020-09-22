@@ -1,4 +1,4 @@
-package com.example.taskweek4.ui.Activity
+package com.example.taskweek4.ui.activity
 
 
 import android.content.pm.ActivityInfo
@@ -11,14 +11,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
-import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.Movies
 import com.example.taskweek4.ui.homefragment.HomeActivityViewModel
-import com.example.taskweek4.ui.homefragment.HomeFragment
 import com.example.taskweek4.ui.searchFragment.SearchFragmentViewModel
 import com.example.taskweek4.ui.topRatedFragment.TopRatedViewModel
 import kotlinx.android.synthetic.main.mainactivity.*
+
 class HomeActivity : AppCompatActivity(), MyInterface {
 
 

@@ -1,19 +1,16 @@
 package com.example.taskweek4.ui.homefragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
-import com.example.taskweek4.data.models.ui.Movies
-import com.example.taskweek4.recyclerview.MovieAdabter
 import kotlinx.android.synthetic.main.fragment_homefragment.*
 
 class HomeFragment : Fragment() {

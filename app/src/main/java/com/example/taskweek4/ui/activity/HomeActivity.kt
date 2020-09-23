@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
@@ -63,6 +64,11 @@ class HomeActivity : AppCompatActivity(), MyInterface {
             bindSearchData(it)
         })
 
+        searchViewModel.errorLiveData.observe(this,
+            {
+                Toast.makeText(this,searchViewModel.errorLiveData.value, Toast.LENGTH_SHORT).show()
+            })
+
         iconListener()
 
         searchText.setOnEditorActionListener(object : TextView.OnEditorActionListener {
@@ -70,7 +76,7 @@ class HomeActivity : AppCompatActivity(), MyInterface {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     if (searchText.text.isEmpty())
                         return false
-                    if(searchText.text.toString()!=searchViewModel.currentSearch) {
+                    else {
                         searchViewModel.page = 1
                         searchViewModel.searchAdapter.clear()
                     }

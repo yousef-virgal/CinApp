@@ -41,15 +41,6 @@ class SearchFragment : Fragment() {
         model.searchForData(myInterface.getText(), model.page)
 
         setRecyclerView()
-
-        model.errorLiveData.observe(viewLifecycleOwner,
-            {
-                Toast.makeText(requireContext(),model.errorLiveData.value, Toast.LENGTH_SHORT).show()
-            })
-
-
-
-
         scrollListener()
 
 
@@ -81,8 +72,6 @@ class SearchFragment : Fragment() {
 
     override fun onDestroyView() {
         requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_USER
-        model.searchAdapter.clear()
-        model.page =1
         super.onDestroyView()
     }
 

@@ -30,6 +30,7 @@ class SearchFragmentViewModel(application: Application): AndroidViewModel(applic
             return
         }
         currentSearch = query
+        currentPage= page
         MovieRepo.searchData(this,query,page)
     }
 

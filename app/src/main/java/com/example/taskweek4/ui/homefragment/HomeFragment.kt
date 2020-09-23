@@ -12,10 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
 import kotlinx.android.synthetic.main.fragment_homefragment.*
-
 class HomeFragment : Fragment() {
 
-    lateinit var model: HomeActivityViewModel
+    lateinit var model: HomeFragmentViewModel
     val linearLayout = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
     override fun onCreateView(
@@ -29,7 +28,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        model = ViewModelProvider(requireActivity()).get(HomeActivityViewModel::class.java)
+        model = ViewModelProvider(requireActivity()).get(HomeFragmentViewModel::class.java)
          displayData()
             setRecyclerView()
 //        spinnerListener()

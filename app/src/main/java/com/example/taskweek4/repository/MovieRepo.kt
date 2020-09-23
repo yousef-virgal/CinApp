@@ -42,6 +42,7 @@ object MovieRepo {
                 if(response.isSuccessful) {
                     isLoadingHome=false
                     movieDataBase.movieDao().deleteAll()
+                    println(response.body()!!)
                     movieResponse = mapper.mapData(response.body()!!)
                     movieDataBase.movieDao().addMovies(movieResponse)
                     movieCallBack.isReadyHome(movieResponse)

@@ -8,7 +8,7 @@ import com.example.taskweek4.repository.MovieRepo
 import android.app.Application
 import com.example.taskweek4.recyclerview.MovieAdabter
 
-class HomeActivityViewModel(application: Application) : AndroidViewModel(application),MovieCallBack
+class HomeFragmentViewModel(application: Application) : AndroidViewModel(application),MovieCallBack
 {
 
     private val _movieLiveData : MutableLiveData<List<Movies>> by lazy { MutableLiveData<List<Movies>>() }

@@ -14,7 +14,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.Movies
-import com.example.taskweek4.ui.homefragment.HomeActivityViewModel
+import com.example.taskweek4.ui.homefragment.HomeFragmentViewModel
 import com.example.taskweek4.ui.searchFragment.SearchFragmentViewModel
 import com.example.taskweek4.ui.topRatedFragment.TopRatedViewModel
 import kotlinx.android.synthetic.main.mainactivity.*
@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.mainactivity.*
 class HomeActivity : AppCompatActivity(), MyInterface {
 
 
-    private val movieViewModel: HomeActivityViewModel by viewModels()
+    private val movieViewModel: HomeFragmentViewModel by viewModels()
     private val searchViewModel: SearchFragmentViewModel by viewModels()
     private val topRatedViewModel: TopRatedViewModel by viewModels()
 
@@ -68,6 +68,11 @@ class HomeActivity : AppCompatActivity(), MyInterface {
             {
                 Toast.makeText(this,searchViewModel.errorLiveData.value, Toast.LENGTH_SHORT).show()
             })
+
+        movieViewModel.errorLiveData.observe(this, {
+            Toast.makeText(this, movieViewModel.errorLiveData.value, Toast.LENGTH_SHORT).show()
+        })
+
 
         iconListener()
 

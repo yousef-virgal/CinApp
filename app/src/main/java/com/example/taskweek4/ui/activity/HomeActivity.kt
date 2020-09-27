@@ -50,6 +50,7 @@ class HomeActivity : AppCompatActivity(), MyInterface {
             this,
             {
                 bindHomeData(it)
+                println("movieViewModel, observe ,bindHomeData")
             }
         )
 
@@ -57,6 +58,7 @@ class HomeActivity : AppCompatActivity(), MyInterface {
             this,
             {
                 bindTopRatedData(it)
+                println("TopViewModel, observe ,bindTopRatedData")
             }
         )
 

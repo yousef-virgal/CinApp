@@ -6,13 +6,13 @@ import androidx.room.PrimaryKey
 @Entity
 data class Movies(
     @PrimaryKey
-    val movieId:Int,
-    val voteAverage:Double,
+    val movieId:Int?,
+    val voteAverage:Double?,
     val title:String?,
     val releaseDate:String?,
-    val backdropPath:String,
-    val posterPath:String,
-    val overview:String,
-    val mediaType:String,
-    val voteCount:Double,
+    val backdropPath:String?,
+    val posterPath:String?,
+    val overview:String?,
+    val mediaType:String?,
+    val voteCount:Double?,
     val name:String?)

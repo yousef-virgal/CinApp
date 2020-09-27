@@ -1,4 +1,4 @@
-package com.example.taskweek4.ui
+package com.example.taskweek4.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -7,7 +7,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.movie_intent.*
 
 
-class MainActivity2 : AppCompatActivity() {
+class ItemActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.movie_intent)

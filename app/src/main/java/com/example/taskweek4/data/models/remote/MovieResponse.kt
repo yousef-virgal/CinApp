@@ -2,7 +2,7 @@ package com.example.taskweek4.data.models.remote
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieResponse(val results:List<MovieObject>)
+data class MovieResponse(val results:List<MovieObject>,val total_pages:Int)
 
 data class MovieObject(
     @SerializedName("id")

@@ -250,6 +250,7 @@ fun clickListener(position:Int,edt: SharedPreferences.Editor,movies:List<Movies>
     edt.putFloat("rate", movies[position].voteAverage!!.toFloat())
     edt.putString("releaseDate", movies[position].releaseDate)
     edt.putInt("movieId", movies[position].movieId!!)
+    edt.putBoolean("isFavored",movies[position].fav)
     edt.apply()
 
 

@@ -54,22 +54,28 @@ class RecomendationsAdapter(val movies:MutableList<Movies>):
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(holder is itemHolder) {
-            if (movies[position].posterPath != null)
+            if (movies[position].posterPath != null) {
                 Picasso.get()
                     .load("http://image.tmdb.org/t/p/w500" + movies[position].posterPath)
                     .into(holder.image)
-            else
+            }
+            else {
                 holder.image.setImageResource(R.drawable.questionmark)
-            if (movies[position].mediaType == "movie")
-             holder.text.text = movies[position].title
-            else
+            }
+
+            if (movies[position].mediaType == "movie") {
+                holder.text.text = movies[position].title
+            }
+            else {
                 holder.text.text = movies[position].name
+            }
 
             holder.itemView.setOnClickListener {
                 pref = holder.itemView.context.getSharedPreferences("DeviceToken",
                     Context.MODE_PRIVATE
                 )
                 edt = pref.edit()
+                println("bbbbbb")
                 clickListener(position,edt,movies)
                 holder.itemView.findNavController().navigate(R.id.action_itemFragment_self)
             }
@@ -90,5 +96,8 @@ class RecomendationsAdapter(val movies:MutableList<Movies>):
     fun addItems(list:List<Movies>){
         movies.addAll(list)
         notifyDataSetChanged()
+    }
+    fun clear(){
+        movies.clear()
     }
 }

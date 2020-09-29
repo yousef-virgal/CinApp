@@ -27,7 +27,7 @@ class ItemFragment : Fragment() {
 
     lateinit var prefs: SharedPreferences
     lateinit var model: itemViewModel
-    val myAdapter:RecomendationsAdapter =RecomendationsAdapter(mutableListOf())
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,31 +53,22 @@ class ItemFragment : Fragment() {
         movieName.text = prefs.getString("title",null)
         releaseDate.text = prefs.getString("releaseDate",null)
         overView_text.text = prefs.getString("overView",null)
-
-        setRecycler()
         model.getRecomendations(model.page,prefs.getInt("movieId",0))
+        setRecycler()
 
-
-        model.movieLiveData.observe(viewLifecycleOwner,{
-
-            bindData(it)
-        })
-        model.errorLiveData.observe(viewLifecycleOwner, {
-            Toast.makeText(requireContext(), model.errorLiveData.value, Toast.LENGTH_SHORT).show()
-        })
 
         scrollListener()
     }
 
 
-    private fun bindData(movies:List<Movies>){
-        myAdapter.addItems(movies)
-
-    }
+//    private fun bindData(movies:List<Movies>){
+//        myAdapter.addItems(movies)
+//
+//    }
 
     private fun setRecycler(){
         similarMoviesRecylerView.apply {
-            adapter = myAdapter
+            adapter =model.myAdapter
             layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         }
     }
@@ -93,5 +84,13 @@ class ItemFragment : Fragment() {
             }
 
         })
+    }
+
+    override fun onDestroyView() {
+        println("aaaaaa")
+        super.onDestroyView()
+        model.page=1
+        model.myAdapter.clear()
+
     }
 }

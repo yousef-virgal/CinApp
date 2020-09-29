@@ -25,6 +25,7 @@ import com.example.taskweek4.ui.homefragment.HomeFragmentViewModel
 import com.example.taskweek4.ui.searchFragment.SearchFragmentViewModel
 import com.example.taskweek4.ui.topRatedFragment.TopRatedViewModel
 import com.example.taskweek4.ui.favouriteFragment.*
+import com.example.taskweek4.ui.itemFragment.itemViewModel
 import kotlinx.android.synthetic.main.design_1.*
 import kotlinx.android.synthetic.main.mainactivity.*
 
@@ -34,7 +35,7 @@ class HomeActivity : AppCompatActivity(), MyInterface {
     private val movieViewModel: HomeFragmentViewModel by viewModels()
     private val searchViewModel: SearchFragmentViewModel by viewModels()
     private val topRatedViewModel: TopRatedViewModel by viewModels()
-    private val favoriteViewModel: FavoriteViewModel by viewModels()
+    private val itemViewModel: itemViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,6 +90,10 @@ class HomeActivity : AppCompatActivity(), MyInterface {
 
         movieViewModel.errorLiveData.observe(this, {
             Toast.makeText(this, movieViewModel.errorLiveData.value, Toast.LENGTH_SHORT).show()
+        })
+
+        itemViewModel.movieLiveData.observe(this,{
+            itemViewModel.myAdapter.addItems(it)
         })
 
 

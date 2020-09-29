@@ -130,17 +130,6 @@ class MovieAdapter(private val movies: MutableList<Movies>): RecyclerView.Adapte
             if(movies[position].fav == false) {
                 holder.favButton.setBackgroundResource(R.drawable.ic_heart_empty)
             }
-
-
-
-
-
-
-
-
-
-
-
             if (movies[position].mediaType == "movie")
                 holder.movieName.text = movies[position].title
             else
@@ -239,6 +228,7 @@ fun clickListener(position:Int,edt: SharedPreferences.Editor,movies:List<Movies>
     edt.putString("releaseDate", movies[position].releaseDate)
     edt.putInt("movieId", movies[position].movieId!!)
     edt.putBoolean("isFavored",movies[position].fav)
+
     edt.apply()
 
 

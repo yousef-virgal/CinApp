@@ -181,7 +181,7 @@ object MovieRepo {
         return movieDataBase.movieDao().getFavorites()
     }
     fun changeMovie(movie: Movies){
-        return movieDataBase.movieDao().changeMovie(movie)
+         movieDataBase.movieDao().changeMovie(movie)
     }
     fun isLoadingRecomendations():Boolean{
          return isLoadingRecomendations

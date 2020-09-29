@@ -24,8 +24,10 @@ object MovieRepo {
     private var isLoadingHome:Boolean =false
     private var isLoadingSearch:Boolean =false
     private var isLoadingTopRated:Boolean =false
+    private var isLoadingRecomendations:Boolean =false
     lateinit var movieResponse: List<Movies>
     lateinit var searchResponse:List<Movies>
+    lateinit var RecommendationsResponse:List<Movies>
     private lateinit var movieDataBase: MovieDataBase
 
 
@@ -70,10 +72,47 @@ object MovieRepo {
     fun isLoadingSearch():Boolean{
         return isLoadingSearch
     }
-    fun isLoadingToprated():Boolean{
+    fun isLoadingTopRated():Boolean{
         return isLoadingTopRated
     }
 
+    fun getRecomendations(itemCallBack:ItemCallBack,movieId:Int,page:Int){
+        isLoadingRecomendations =true
+        val call:Call<MovieResponse> = apiInterface.getRecommendations(movieId,apiKey,page)
+        call.enqueue(object : Callback<MovieResponse> {
+            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
+                if(response.isSuccessful){
+                    isLoadingRecomendations= false
+                    if(response.body()!!.results.isEmpty()) {
+                        if (page == 1) {
+                            val message = "No results found"
+                            itemCallBack.failed(message)
+                            return
+                        } else {
+                            val message = "No more Results"
+                            itemCallBack.failed(message)
+                            return
+                        }
+                    }
+                    RecommendationsResponse = mapper.mapData(response.body()!!)
+                    itemCallBack.isReadyRecomendations(RecommendationsResponse)
+                    return
+
+
+                    }
+                }
+
+            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
+                isLoadingRecomendations=false
+                t.printStackTrace()
+                val message ="An Error occurred while getting the data "
+                itemCallBack.failed(message)
+                itemCallBack.isReadyRecomendations(movieDataBase.movieDao().getMovies())
+            }
+
+        })
+
+    }
     fun searchData(searchCallBack: SearchCallBack, query:String,page:Int){
         isLoadingSearch= true
         val call:Call<MovieResponse> = apiInterface.searchForMovies(apiKey,query,page)
@@ -94,7 +133,6 @@ object MovieRepo {
                         }
                     }
                     searchResponse = mapper.mapData(response.body()!!)
-                    println(searchResponse)
                     searchCallBack.isReadySearch(searchResponse)
                     return
 
@@ -144,7 +182,9 @@ object MovieRepo {
     }
     fun changeMovie(movie: Movies){
         return movieDataBase.movieDao().changeMovie(movie)
-
+    }
+    fun isLoadingRecomendations():Boolean{
+         return isLoadingRecomendations
     }
 }
 
@@ -161,5 +201,10 @@ interface SearchCallBack{
 interface TopRatedCallBack {
     fun isReadyTopRated(movies:List<Movies>)
     fun failed(message: String)
+}
+
+interface ItemCallBack{
+    fun isReadyRecomendations(movies:List<Movies>)
+    fun failed(message:String)
 }
 

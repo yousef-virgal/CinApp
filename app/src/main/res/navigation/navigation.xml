@@ -44,5 +44,9 @@
         android:id="@+id/itemFragment"
         android:name="com.example.taskweek4.ui.itemFragment.ItemFragment"
         android:label="fragment_item"
-        tools:layout="@layout/fragment_item" />
+        tools:layout="@layout/fragment_item" >
+        <action
+            android:id="@+id/action_itemFragment_self"
+            app:destination="@id/itemFragment" />
+    </fragment>
 </navigation>

@@ -2,30 +2,18 @@ package com.example.taskweek4.recyclerview
 
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.findNavController
-import android.widget.Toast
 import android.widget.ToggleButton
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStore
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.RecyclerView
-import com.example.taskweek4.ui.activity.ItemActivity
 import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.Movies
 import com.example.taskweek4.repository.MovieRepo
-import com.example.taskweek4.ui.favouriteFragment.FavoriteViewModel
-import com.google.android.material.internal.ContextUtils.getActivity
 import com.squareup.picasso.Picasso
-import com.example.taskweek4.ui.homefragment.HomeFragment
-import com.example.taskweek4.ui.homefragment.HomeFragmentViewModel
-import kotlinx.android.synthetic.main.design_1.*
 
 class MovieAdapter(private val movies: MutableList<Movies>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

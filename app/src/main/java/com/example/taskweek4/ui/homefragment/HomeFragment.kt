@@ -8,14 +8,18 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
+import com.example.taskweek4.data.models.ui.Movies
+import com.example.taskweek4.recyclerview.FavoritesAdapter
+import kotlinx.android.synthetic.main.design_1.*
 import kotlinx.android.synthetic.main.fragment_homefragment.*
 class HomeFragment : Fragment() {
 
     lateinit var model: HomeFragmentViewModel
-    val linearLayout = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+    lateinit var linearLayout :LinearLayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,8 +33,10 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         model = ViewModelProvider(requireActivity()).get(HomeFragmentViewModel::class.java)
+
          displayData()
             setRecyclerView()
+
 //        spinnerListener()
 
 
@@ -41,6 +47,9 @@ class HomeFragment : Fragment() {
 
 
         scrollListener()
+
+
+
 
     }
 
@@ -102,7 +111,7 @@ class HomeFragment : Fragment() {
 //                MovieAdabter(mutableListOf())
 //            else
             adapter=model.movieAdapter
-
+            linearLayout =  LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             layoutManager = linearLayout
 
         }
@@ -114,7 +123,17 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         model.isFirstCreation= true
+        println("After Destroying home")
+        //checkFav(model.movieList)
 
+    }
+    fun checkFav(movies: List<Movies>){
+
+       /* for(i in movies)
+            if(i.fav == true)
+                favToggleButton.isChecked = true
+            else
+                favToggleButton.isChecked = false*/
     }
 
 

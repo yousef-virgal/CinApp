@@ -1,6 +1,7 @@
 package com.example.taskweek4.repository
 
 import android.content.Context
+import android.graphics.Movie
 import com.example.taskweek4.data.models.database.MovieDataBase
 import com.example.taskweek4.data.models.network.ApiClient
 import com.example.taskweek4.data.models.network.ApiInterface
@@ -41,7 +42,7 @@ object MovieRepo {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if(response.isSuccessful) {
                     isLoadingHome=false
-                    movieDataBase.movieDao().deleteAll()
+
                     println(response.body()!!)
                     movieResponse = mapper.mapData(response.body()!!)
                     movieDataBase.movieDao().addMovies(movieResponse)
@@ -122,7 +123,7 @@ object MovieRepo {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if(response.isSuccessful) {
                     isLoadingTopRated=false
-                    movieDataBase.movieDao().deleteAll()
+
                     movieResponse = mapper.mapData(response.body()!!)
                     movieDataBase.movieDao().addMovies(movieResponse)
                     topRatedCallback.isReadyTopRated(movieResponse)
@@ -136,6 +137,13 @@ object MovieRepo {
                 topRatedCallback.isReadyTopRated(movieDataBase.movieDao().getMovies())
             }
         })
+
+    }
+    fun getFavorites():List<Movies>{
+        return movieDataBase.movieDao().getFavorites()
+    }
+    fun changeMovie(movie: Movies){
+        return movieDataBase.movieDao().changeMovie(movie)
 
     }
 }
@@ -154,3 +162,4 @@ interface TopRatedCallBack {
     fun isReadyTopRated(movies:List<Movies>)
     fun failed(message: String)
 }
+

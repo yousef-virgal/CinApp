@@ -9,19 +9,40 @@
         android:id="@+id/homefragment"
         android:name="com.example.taskweek4.ui.homefragment.HomeFragment"
         android:label="fragment_homefragment"
-        tools:layout="@layout/fragment_homefragment" />
+        tools:layout="@layout/fragment_homefragment" >
+        <action
+            android:id="@+id/action_homefragment_to_itemFragment"
+            app:destination="@id/itemFragment" />
+    </fragment>
     <fragment
         android:id="@+id/topRatedFragment"
         android:name="com.example.taskweek4.ui.topRatedFragment.TopRatedFragment"
-        android:label="fragment_search" />
+        android:label="fragment_search" >
+        <action
+            android:id="@+id/action_topRatedFragment_to_itemFragment"
+            app:destination="@id/itemFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favouriteFragment"
-        android:name="com.example.taskweek4.ui.favouriteFragment.FavouriteFragment"
+        android:name="com.example.taskweek4.ui.favouriteFragment.FavoriteFragment"
         android:label="fragment_favourite"
-        tools:layout="@layout/fragment_favourite" />
+        tools:layout="@layout/fragment_favourite" >
+        <action
+            android:id="@+id/action_favouriteFragment_to_itemFragment"
+            app:destination="@id/itemFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.taskweek4.ui.searchFragment.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_itemFragment"
+            app:destination="@id/itemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemFragment"
+        android:name="com.example.taskweek4.ui.itemFragment.ItemFragment"
+        android:label="fragment_item"
+        tools:layout="@layout/fragment_item" />
 </navigation>

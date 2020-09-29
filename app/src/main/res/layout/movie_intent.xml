@@ -56,5 +56,18 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="wrap_content"/>
+    <ToggleButton
+        android:id="@+id/myToggleButton"
+
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/toggle_heart_drawable"
+        android:checked="false"
+        android:textOff=""
+        android:textOn=""
+
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="368dp" />
+
 
 </LinearLayout>

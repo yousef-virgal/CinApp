@@ -12,6 +12,7 @@ abstract class MovieDataBase:RoomDatabase() {
     abstract fun movieDao():MovieDao
     companion object{
         private var Instance:MovieDataBase? =null
+
         fun initializeDataBase(context:Context):MovieDataBase{
             if(Instance!=null)
                 return Instance!!

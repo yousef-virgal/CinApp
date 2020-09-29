@@ -15,4 +15,7 @@ data class Movies(
     val overview:String?,
     val mediaType:String?,
     val voteCount:Double?,
-    val name:String?)
+    val name:String?,
+    var fav:Boolean = false
+
+)

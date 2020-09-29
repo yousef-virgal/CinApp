@@ -6,14 +6,14 @@ import com.example.taskweek4.data.models.ui.Movies
 import com.example.taskweek4.repository.MovieCallBack
 import com.example.taskweek4.repository.MovieRepo
 import android.app.Application
-import com.example.taskweek4.recyclerview.MovieAdabter
+import com.example.taskweek4.recyclerview.MovieAdapter
 
 class HomeFragmentViewModel(application: Application) : AndroidViewModel(application),MovieCallBack
 {
 
     private val _movieLiveData : MutableLiveData<List<Movies>> by lazy { MutableLiveData<List<Movies>>() }
     private val _errorLiveData : MutableLiveData<String> by lazy { MutableLiveData<String>() }
-    private val movieList:MutableList<Movies> = mutableListOf()
+     val movieList:MutableList<Movies> = mutableListOf()
     val movieLiveData: LiveData<List<Movies>>
         get() = _movieLiveData
     val errorLiveData: LiveData<String>
@@ -27,7 +27,7 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
     var page=1
     var isFirst =true
     var isFirstCreation =false
-    val movieAdapter: MovieAdabter = MovieAdabter(mutableListOf())
+    val movieAdapter: MovieAdapter = MovieAdapter(mutableListOf(),)
 
 
 

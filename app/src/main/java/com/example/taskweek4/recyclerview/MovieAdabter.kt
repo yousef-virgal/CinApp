@@ -162,7 +162,7 @@ class MovieAdabter(private val movies: MutableList<Movies>): RecyclerView.Adapte
                 holder.movieName.text = movies[position].name
             holder.movieScore.text = movies[position].voteAverage.toString()
             holder.movieType.text = movies[position].mediaType
-            
+
 
 
             Picasso.get()

@@ -1,13 +1,15 @@
 package com.example.taskweek4.recyclerview
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.Movies
-import com.example.taskweek4.ui.activity.ItemActivity
 import com.squareup.picasso.Picasso
 import com.synnapps.carouselview.CarouselView
 
@@ -21,6 +23,8 @@ class TopRatedAdapter(val movies:MutableList<Movies>): RecyclerView.Adapter<Recy
     private val carouselViewHolder:Int = 3
     private val blankViewHolder:Int = 4
     private val movieText:String = "movie"
+    private lateinit var  pref: SharedPreferences
+    private lateinit var edt: SharedPreferences.Editor
 
     class TopRatedVieHolder(itemView: View): RecyclerView.ViewHolder(itemView)
     class CarouselViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -37,11 +41,11 @@ class TopRatedAdapter(val movies:MutableList<Movies>): RecyclerView.Adapter<Recy
             }
             normalViewHolder->{
                 val v = LayoutInflater.from(parent.context).inflate(R.layout.design_1,parent,false)
-                MovieAdabter.NormalMovieHolder(v)
+                MovieAdapter.NormalMovieHolder(v)
             }
             loadingViewHolder->{
                 val v = LayoutInflater.from(parent.context).inflate(R.layout.loading,parent,false)
-                MovieAdabter.LoadingViewHolder(v)
+                MovieAdapter.LoadingViewHolder(v)
             }
             carouselViewHolder->{
                 val v = LayoutInflater.from(parent.context).inflate(R.layout.carouselview,parent,false)
@@ -49,11 +53,11 @@ class TopRatedAdapter(val movies:MutableList<Movies>): RecyclerView.Adapter<Recy
             }
             blankViewHolder->{
                 val v = LayoutInflater.from(parent.context).inflate(R.layout.blank,parent,false)
-                return MovieAdabter.BlankViewHolder(v)
+                return MovieAdapter.BlankViewHolder(v)
             }
             else->{
                 val v = LayoutInflater.from(parent.context).inflate(R.layout.fragment_toprated,parent,false)
-                MovieAdabter.NormalMovieHolder(v)
+                MovieAdapter.NormalMovieHolder(v)
             }
         }
     }
@@ -68,27 +72,24 @@ class TopRatedAdapter(val movies:MutableList<Movies>): RecyclerView.Adapter<Recy
             }
 
             holder.carousel.setImageClickListener { myPosition ->
-                intent = Intent(
-                    holder.itemView.context,
-                    ItemActivity::class.java
+                pref = holder.itemView.context.getSharedPreferences("DeviceToken",
+                    Context.MODE_PRIVATE
                 )
-                intent.putExtra("title", movies[myPosition].title)
-                intent.putExtra("overViewText", movies[myPosition].overview)
-                intent.putExtra("Image", movies[myPosition].backdropPath)
-                holder.itemView.context.startActivity(intent)
+                edt = pref.edit()
+                clickListener(myPosition,edt,movies)
+                holder.itemView.findNavController().navigate(R.id.action_topRatedFragment_to_itemFragment)
             }
         }
 
-        else if(holder is MovieAdabter.NormalMovieHolder){
+        else if(holder is MovieAdapter.NormalMovieHolder){
             holder.itemView.setOnClickListener {
-                intent = Intent(
-                    holder.itemView.context,
-                    ItemActivity::class.java
+                pref = holder.itemView.context.getSharedPreferences("DeviceToken",
+                    Context.MODE_PRIVATE
                 )
-                intent.putExtra("title", movies[position-1].title)
-                intent.putExtra("overViewText", movies[position-1].overview)
-                intent.putExtra("Image", movies[position-1].backdropPath)
-                holder.itemView.context.startActivity(intent)
+                edt = pref.edit()
+                clickListener(position-1,edt,movies)
+                holder.itemView.findNavController().navigate(R.id.action_topRatedFragment_to_itemFragment)
+
             }
 
 

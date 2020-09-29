@@ -1,9 +1,12 @@
 package com.example.taskweek4.recyclerview
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.Movies
@@ -17,6 +20,8 @@ class FavoritesAdapter(val movies:MutableList<Movies>): RecyclerView.Adapter<Rec
     private val titleViewHolder:Int =0
     private val normalViewHolder:Int =1
     private val movieText:String = "movie"
+    private lateinit var  pref: SharedPreferences
+    private lateinit var edt: SharedPreferences.Editor
 
     class FavoritesViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
 
@@ -31,27 +36,25 @@ class FavoritesAdapter(val movies:MutableList<Movies>): RecyclerView.Adapter<Rec
             }
             normalViewHolder->{
                 val v = LayoutInflater.from(parent.context).inflate(R.layout.design_1,parent,false)
-                MovieAdabter.NormalMovieHolder(v)
+                MovieAdapter.NormalMovieHolder(v)
             }
             else->{
                 val v = LayoutInflater.from(parent.context).inflate(R.layout.fragment_favourite,parent,false)
-                MovieAdabter.NormalMovieHolder(v)
+                MovieAdapter.NormalMovieHolder(v)
             }
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        if(holder is MovieAdabter.NormalMovieHolder){
+        if(holder is MovieAdapter.NormalMovieHolder){
             holder.itemView.setOnClickListener {
-                intent = Intent(
-                    holder.itemView.context,
-                    ItemActivity::class.java
+                pref = holder.itemView.context.getSharedPreferences("DeviceToken",
+                    Context.MODE_PRIVATE
                 )
-                intent.putExtra("title", movies[position-1].title)
-                intent.putExtra("overViewText", movies[position-1].overview)
-                intent.putExtra("Image", movies[position-1].backdropPath)
-                holder.itemView.context.startActivity(intent)
+                edt = pref.edit()
+                clickListener(position-1,edt,movies)
+                holder.itemView.findNavController().navigate(R.id.action_favouriteFragment_to_itemFragment)
             }
 
 

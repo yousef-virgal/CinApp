@@ -5,8 +5,11 @@ import com.example.taskweek4.data.models.database.MovieDataBase
 import com.example.taskweek4.data.models.network.ApiClient
 import com.example.taskweek4.data.models.network.ApiInterface
 import com.example.taskweek4.data.models.remote.MovieResponse
+import com.example.taskweek4.data.models.remote.VideoResponse
 import com.example.taskweek4.data.models.ui.mappers.Mapper
+import com.example.taskweek4.data.models.ui.mappers.VideoMapper
 import com.example.taskweek4.data.models.ui.objects.Movies
+import com.example.taskweek4.data.models.ui.objects.Videos
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,6 +20,7 @@ object MovieRepo {
 
     private val retrofitObject = ApiClient.getRetrofit()
     private val mapper: Mapper by lazy { Mapper() }
+    private val videoMapper: VideoMapper by lazy { VideoMapper() }
     private val apiInterface:ApiInterface by lazy {
         retrofitObject!!.create(ApiInterface::class.java)
     }
@@ -25,6 +29,7 @@ object MovieRepo {
     private var isLoadingTopRated:Boolean =false
     private var isLoadingRecomendations:Boolean =false
     lateinit var movieResponse: List<Movies>
+    lateinit var videoResponse: List<Videos>
     lateinit var searchResponse:List<Movies>
     lateinit var RecommendationsResponse:List<Movies>
     private lateinit var movieDataBase: MovieDataBase
@@ -176,6 +181,24 @@ object MovieRepo {
         })
 
     }
+    fun getVideos(itemCallBack: ItemCallBack,movieId: Int){
+        val call:Call<VideoResponse> = apiInterface.getVideos(movieId,apiKey)
+        call.enqueue(object:Callback<VideoResponse>{
+            override fun onResponse(call: Call<VideoResponse>, response: Response<VideoResponse>) {
+                if(response.isSuccessful) {
+
+                    videoResponse = videoMapper.mapData(response.body()!!)
+                    itemCallBack.isReadyVideos(videoResponse)
+                }
+            }
+            override fun onFailure(call: Call<VideoResponse>, t: Throwable) {
+                t.printStackTrace()
+                val message ="An Error occurred while getting the data "
+                itemCallBack.failed(message)
+            }
+        })
+
+    }
     fun getFavorites():List<Movies>{
         return movieDataBase.movieDao().getFavorites()
     }
@@ -204,6 +227,7 @@ interface TopRatedCallBack {
 
 interface ItemCallBack{
     fun isReadyRecomendations(movies:List<Movies>)
+    fun isReadyVideos(videos:List<Videos>)
     fun failed(message:String)
 }
 

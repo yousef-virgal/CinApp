@@ -74,7 +74,6 @@ class RecomendationsAdapter(val movies:MutableList<Movies>):
                     Context.MODE_PRIVATE
                 )
                 edt = pref.edit()
-                println("bbbbbb")
                 clickListener(position,edt,movies)
                 holder.itemView.findNavController().navigate(R.id.action_itemFragment_self)
             }

@@ -1,8 +1,5 @@
 package com.example.taskweek4.data.models.ui.mappers
-
-import com.example.taskweek4.data.models.remote.MovieResponse
 import com.example.taskweek4.data.models.remote.VideoResponse
-import com.example.taskweek4.data.models.ui.objects.Movies
 import com.example.taskweek4.data.models.ui.objects.Videos
 
 class VideoMapper {

@@ -1,16 +1,13 @@
 package com.example.taskweek4.ui.activity
 
 
-import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
-import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.Toast
-import android.widget.ToggleButton
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
@@ -18,15 +15,11 @@ import androidx.lifecycle.observe
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.example.taskweek4.R
-import com.example.taskweek4.R.id.favToggleButton
-import com.example.taskweek4.data.models.ui.Movies
-import com.example.taskweek4.ui.favouriteFragment.FavoriteViewModel
+import com.example.taskweek4.data.models.ui.objects.Movies
 import com.example.taskweek4.ui.homefragment.HomeFragmentViewModel
 import com.example.taskweek4.ui.searchFragment.SearchFragmentViewModel
 import com.example.taskweek4.ui.topRatedFragment.TopRatedViewModel
-import com.example.taskweek4.ui.favouriteFragment.*
 import com.example.taskweek4.ui.itemFragment.itemViewModel
-import kotlinx.android.synthetic.main.design_1.*
 import kotlinx.android.synthetic.main.mainactivity.*
 
 class HomeActivity : AppCompatActivity(), MyInterface {

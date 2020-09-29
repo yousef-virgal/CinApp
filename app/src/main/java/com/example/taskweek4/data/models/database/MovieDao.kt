@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.taskweek4.data.models.ui.Movies
+import com.example.taskweek4.data.models.ui.objects.Movies
 
 @Dao
 interface MovieDao {

@@ -1,4 +1,4 @@
-package com.example.taskweek4.data.models.ui
+package com.example.taskweek4.data.models.ui.objects
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

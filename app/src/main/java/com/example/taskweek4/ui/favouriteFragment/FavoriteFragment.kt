@@ -11,14 +11,10 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
-import com.example.taskweek4.data.models.ui.Movies
+import com.example.taskweek4.data.models.ui.objects.Movies
 import com.example.taskweek4.recyclerview.FavoritesAdapter
 import com.example.taskweek4.repository.MovieRepo
-import kotlinx.android.synthetic.main.design_1.*
 import kotlinx.android.synthetic.main.fragment_favourite.*
-
-
-import kotlinx.android.synthetic.main.fragment_homefragment.*
 
 class FavoriteFragment: Fragment() {
     lateinit var model: FavoriteViewModel

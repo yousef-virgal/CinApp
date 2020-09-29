@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.taskweek4.data.models.ui.Movies
+import com.example.taskweek4.data.models.ui.objects.Movies
 import com.example.taskweek4.recyclerview.TopRatedAdapter
 import com.example.taskweek4.repository.MovieRepo
 import com.example.taskweek4.repository.TopRatedCallBack

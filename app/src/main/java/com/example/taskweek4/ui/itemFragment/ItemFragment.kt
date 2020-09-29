@@ -6,21 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
-import com.example.taskweek4.data.models.ui.Movies
-import com.example.taskweek4.recyclerview.MovieAdapter
-import com.example.taskweek4.recyclerview.RecomendationsAdapter
-import com.example.taskweek4.ui.homefragment.HomeFragmentViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_item.*
-import kotlinx.android.synthetic.main.fragment_search.*
 
 
 class ItemFragment : Fragment() {

@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.taskweek4.data.models.ui.Movies
+import com.example.taskweek4.data.models.ui.objects.Movies
 
 @Database(entities = [Movies::class],version = 1, exportSchema = false)
 abstract class MovieDataBase:RoomDatabase() {

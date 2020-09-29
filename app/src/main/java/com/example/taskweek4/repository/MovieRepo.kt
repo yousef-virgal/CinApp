@@ -1,13 +1,12 @@
 package com.example.taskweek4.repository
 
 import android.content.Context
-import android.graphics.Movie
 import com.example.taskweek4.data.models.database.MovieDataBase
 import com.example.taskweek4.data.models.network.ApiClient
 import com.example.taskweek4.data.models.network.ApiInterface
 import com.example.taskweek4.data.models.remote.MovieResponse
-import com.example.taskweek4.data.models.ui.Mapper
-import com.example.taskweek4.data.models.ui.Movies
+import com.example.taskweek4.data.models.ui.mappers.Mapper
+import com.example.taskweek4.data.models.ui.objects.Movies
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,7 +16,7 @@ object MovieRepo {
     private const val apiKey:String = "1ef5bae1f03c43fc90bf2c0e1ee45480"
 
     private val retrofitObject = ApiClient.getRetrofit()
-    private val mapper:Mapper by lazy { Mapper() }
+    private val mapper: Mapper by lazy { Mapper() }
     private val apiInterface:ApiInterface by lazy {
         retrofitObject!!.create(ApiInterface::class.java)
     }

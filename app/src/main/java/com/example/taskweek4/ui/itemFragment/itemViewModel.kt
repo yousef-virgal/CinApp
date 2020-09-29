@@ -4,10 +4,9 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.taskweek4.data.models.ui.Movies
+import com.example.taskweek4.data.models.ui.objects.Movies
 import com.example.taskweek4.recyclerview.RecomendationsAdapter
 import com.example.taskweek4.repository.ItemCallBack
-import com.example.taskweek4.repository.MovieCallBack
 import com.example.taskweek4.repository.MovieRepo
 
 class itemViewModel(application: Application) : AndroidViewModel(application), ItemCallBack {

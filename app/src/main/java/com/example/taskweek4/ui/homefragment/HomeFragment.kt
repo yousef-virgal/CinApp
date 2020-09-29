@@ -12,9 +12,7 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
-import com.example.taskweek4.data.models.ui.Movies
-import com.example.taskweek4.recyclerview.FavoritesAdapter
-import kotlinx.android.synthetic.main.design_1.*
+import com.example.taskweek4.data.models.ui.objects.Movies
 import kotlinx.android.synthetic.main.fragment_homefragment.*
 class HomeFragment : Fragment() {
 

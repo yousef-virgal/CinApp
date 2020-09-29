@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
-import com.example.taskweek4.data.models.ui.Movies
+import com.example.taskweek4.data.models.ui.objects.Movies
 import com.squareup.picasso.Picasso
 import com.synnapps.carouselview.CarouselView
 

@@ -92,6 +92,7 @@ class MovieAdabter(private val movies: MutableList<Movies>): RecyclerView.Adapte
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
+
         if (holder is NormalMovieHolder ) {
             holder.itemView.setOnClickListener {
                 intent = Intent(
@@ -104,6 +105,8 @@ class MovieAdabter(private val movies: MutableList<Movies>): RecyclerView.Adapte
 
                 holder.itemView.context.startActivity(intent)
             }
+
+
 
 
             holder.favButton.setOnCheckedChangeListener { _, favChecked ->
@@ -139,8 +142,14 @@ class MovieAdabter(private val movies: MutableList<Movies>): RecyclerView.Adapte
                 holder.favButton.setBackgroundResource(R.drawable.ic_heart_fill)
                 holder.favButton.isChecked = true
             }
-            if(movies[position].fav == false)
+            if(movies[position].fav == false) {
                 holder.favButton.setBackgroundResource(R.drawable.ic_heart_empty)
+            }
+
+
+
+
+
 
 
 
@@ -153,6 +162,9 @@ class MovieAdabter(private val movies: MutableList<Movies>): RecyclerView.Adapte
                 holder.movieName.text = movies[position].name
             holder.movieScore.text = movies[position].voteAverage.toString()
             holder.movieType.text = movies[position].mediaType
+            
+
+
             Picasso.get()
                 .load("http://image.tmdb.org/t/p/w500" + movies[position].posterPath)
                 .into(holder.moviePoster)
@@ -249,5 +261,6 @@ class MovieAdabter(private val movies: MutableList<Movies>): RecyclerView.Adapte
         }
 
     }
+
 }
 

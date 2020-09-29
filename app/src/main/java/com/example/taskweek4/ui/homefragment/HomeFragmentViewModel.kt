@@ -13,7 +13,7 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
 
     private val _movieLiveData : MutableLiveData<List<Movies>> by lazy { MutableLiveData<List<Movies>>() }
     private val _errorLiveData : MutableLiveData<String> by lazy { MutableLiveData<String>() }
-    private val movieList:MutableList<Movies> = mutableListOf()
+     val movieList:MutableList<Movies> = mutableListOf()
     val movieLiveData: LiveData<List<Movies>>
         get() = _movieLiveData
     val errorLiveData: LiveData<String>

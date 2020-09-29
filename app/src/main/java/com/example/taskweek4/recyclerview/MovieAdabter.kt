@@ -1,16 +1,28 @@
 package com.example.taskweek4.recyclerview
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import android.widget.ToggleButton
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.ui.activity.ItemActivity
 import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.Movies
+import com.example.taskweek4.repository.MovieRepo
+import com.example.taskweek4.ui.favouriteFragment.FavoriteViewModel
+import com.google.android.material.internal.ContextUtils.getActivity
 import com.squareup.picasso.Picasso
+import com.example.taskweek4.ui.homefragment.HomeFragment
+import com.example.taskweek4.ui.homefragment.HomeFragmentViewModel
+import kotlinx.android.synthetic.main.design_1.*
 
 class MovieAdabter(private val movies: MutableList<Movies>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -20,6 +32,10 @@ class MovieAdabter(private val movies: MutableList<Movies>): RecyclerView.Adapte
     private val loadingViewHolder =2
     private val blankViewHolder =3
     private var myPosition:Int= 0
+    var tempCheck:Boolean = false
+   //  var favoriteViewModel: FavoriteViewModel =  ViewModelProvider().get(
+      //  FavoriteViewModel::class.java)
+
 
     class NormalMovieHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
@@ -27,6 +43,8 @@ class MovieAdabter(private val movies: MutableList<Movies>): RecyclerView.Adapte
         val movieName:TextView = itemView.findViewById(R.id.movie_name)
         val movieScore:TextView = itemView.findViewById(R.id.movie_genre)
         val movieType:TextView = itemView.findViewById(R.id.movie_duration)
+        val favButton:ToggleButton = itemView.findViewById(R.id.favToggleButton)
+
     }
 
     class NonNormalMovieHolder(itemView:View):RecyclerView.ViewHolder(itemView){
@@ -73,6 +91,7 @@ class MovieAdabter(private val movies: MutableList<Movies>): RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+
         if (holder is NormalMovieHolder ) {
             holder.itemView.setOnClickListener {
                 intent = Intent(
@@ -82,8 +101,50 @@ class MovieAdabter(private val movies: MutableList<Movies>): RecyclerView.Adapte
                 intent.putExtra("title", movies[position].title)
                 intent.putExtra("overViewText", movies[position].overview)
                 intent.putExtra("Image", movies[position].backdropPath)
+
                 holder.itemView.context.startActivity(intent)
             }
+
+
+            holder.favButton.setOnCheckedChangeListener { _, favChecked ->
+
+                println("favChecked = $favChecked")
+
+                /*if(movies[position].fav == true)
+                    holder.favButton.setBackgroundResource(R.drawable.ic_heart_empty)
+                if(movies[position].fav == false)
+                    holder.favButton.setBackgroundResource(R.drawable.ic_heart_fill)*/
+
+
+                movies[position].fav = favChecked
+
+                if(movies[position].fav == true)
+                    holder.favButton.setBackgroundResource(R.drawable.ic_heart_fill)
+                if(movies[position].fav == false)
+                    holder.favButton.setBackgroundResource(R.drawable.ic_heart_empty)
+
+
+               // Toast.makeText(holder.itemView.context, if( favChecked) " ${holder.movieName.text}  is added to Favorites" else " ${holder.movieName.text} is removed from Favorites", Toast.LENGTH_SHORT).show()
+                MovieRepo.changeMovie(movies[position])
+
+
+
+               //favoriteViewModel.changeMovieFromViewModel(MovieRepo,movies[position])
+
+              //  holder.favButton.isChecked = !holder.favButton.isChecked
+            }
+
+            if(movies[position].fav == true)
+            {
+                holder.favButton.setBackgroundResource(R.drawable.ic_heart_fill)
+                holder.favButton.isChecked = true
+            }
+            if(movies[position].fav == false)
+                holder.favButton.setBackgroundResource(R.drawable.ic_heart_empty)
+
+
+
+
 
 
             if (movies[position].mediaType == "movie")

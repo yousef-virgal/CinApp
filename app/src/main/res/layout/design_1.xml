@@ -79,7 +79,24 @@
         android:textSize="15sp"
         />
 
+    <ToggleButton
+        android:id="@+id/favToggleButton"
 
+        android:layout_width="69dp"
+        android:layout_height="66dp"
+        android:layout_below="@+id/movie_name"
+        android:layout_marginStart="-12dp"
+
+        android:layout_marginTop="-10dp"
+
+        android:layout_toEndOf="@+id/movie_duration"
+        android:background="@drawable/toggle_heart_drawable"
+        android:checked="false"
+
+        android:textOff=""
+        android:textOn=""
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="368dp" />
 
 
 </RelativeLayout>

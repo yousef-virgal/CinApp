@@ -41,6 +41,6 @@ class TopRatedViewModel(application: Application) : AndroidViewModel(application
         _errorLiveData.value =message
     }
     fun isLoading():Boolean{
-        return MovieRepo.isLoadingToprated()
+        return MovieRepo.isLoadingTopRated()
     }
 }

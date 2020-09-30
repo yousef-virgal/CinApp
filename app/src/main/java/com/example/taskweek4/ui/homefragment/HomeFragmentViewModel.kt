@@ -27,7 +27,7 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
     var page=1
     var isFirst =true
     var isFirstCreation =false
-    val movieAdapter: MovieAdapter = MovieAdapter(mutableListOf(),)
+    val movieAdapter: MovieAdapter = MovieAdapter(mutableListOf())
 
 
 

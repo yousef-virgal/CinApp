@@ -8,8 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.taskweek4.R
+import com.example.taskweek4.data.models.remote.MovieResponse
 import com.example.taskweek4.data.models.ui.Movies
 import com.example.taskweek4.repository.MovieRepo
+import com.example.taskweek4.repository.MovieRepo.movieResponse
+import com.example.taskweek4.ui.homefragment.HomeFragmentViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_item.*
 
@@ -17,6 +20,9 @@ import kotlinx.android.synthetic.main.fragment_item.*
 class ItemFragment : Fragment() {
 
     lateinit var prefs: SharedPreferences
+
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,47 +38,6 @@ class ItemFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //SET ON CHECKED LISTNER OF FAVORITE BUTTON //
-       /* favoriteToggleButton.setOnCheckedChangeListener { _, favChecked ->
-
-            println("favChecked = $favChecked")*/
-
-            /*if(movies[position].fav == true)
-                holder.favButton.setBackgroundResource(R.drawable.ic_heart_empty)
-            if(movies[position].fav == false)
-                holder.favButton.setBackgroundResource(R.drawable.ic_heart_fill)*/
-
-
-            /*movies[position].fav = favChecked
-
-            if(movies[position].fav == true)
-                favoriteToggleButton.setBackgroundResource(R.drawable.ic_heart_fill)
-            if(movies[position].fav == false)
-                favoriteToggleButton.setBackgroundResource(R.drawable.ic_heart_empty)
-
-
-            // Toast.makeText(holder.itemView.context, if( favChecked) " ${holder.movieName.text}  is added to Favorites" else " ${holder.movieName.text} is removed from Favorites", Toast.LENGTH_SHORT).show()
-            MovieRepo.changeMovie(movies[position])
-
-
-
-            //favoriteViewModel.changeMovieFromViewModel(MovieRepo,movies[position])
-
-            //  holder.favButton.isChecked = !holder.favButton.isChecked
-        }
-
-        if(movies[position].fav == true)
-        {
-            holder.favButton.setBackgroundResource(R.drawable.ic_heart_fill)
-            holder.favButton.isChecked = true
-        }
-        if(movies[position].fav == false) {
-            holder.favButton.setBackgroundResource(R.drawable.ic_heart_empty)
-        }
-
-*/
-
-
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_item, container, false)
@@ -91,8 +56,34 @@ class ItemFragment : Fragment() {
         releaseDate.text = prefs.getString("releaseDate",null)
         overView_text.text = prefs.getString("overView",null)
 
+        favoriteToggleButton.setOnCheckedChangeListener { _, favChecked ->
+
+            if(favChecked)
+                favoriteToggleButton.setBackgroundResource(R.drawable.ic_heart_fill)
+            if(!favChecked)
+                favoriteToggleButton.setBackgroundResource(R.drawable.ic_heart_empty)
+            MovieRepo.changeMovie(mapMovieData(prefs,favChecked))
+
+        }
 
 
+
+
+
+
+    }
+    fun mapMovieData(prefs: SharedPreferences, favCheck:Boolean): Movies {
+        val movie: Movies
+        movie = Movies(
+            prefs.getInt("movieID",1), prefs.getFloat("rate", 5F).toDouble(), prefs.getString("title",null),
+            prefs.getString("releaseDate",null),prefs.getString("backdropPath",null),
+            prefs.getString("posterPath",null),prefs.getString("overView",null),
+            prefs.getString("mediaType",null),prefs.getLong("voteCount",1).toDouble(),
+            prefs.getString("title",null),favCheck
+
+
+        )
+        return movie
     }
 
 }

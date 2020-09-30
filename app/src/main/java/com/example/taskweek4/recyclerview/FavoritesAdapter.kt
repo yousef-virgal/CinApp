@@ -10,9 +10,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.Movies
-import com.example.taskweek4.ui.activity.ItemActivity
 import com.squareup.picasso.Picasso
-import com.synnapps.carouselview.CarouselView
 
 class FavoritesAdapter(val movies:MutableList<Movies>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var intent: Intent

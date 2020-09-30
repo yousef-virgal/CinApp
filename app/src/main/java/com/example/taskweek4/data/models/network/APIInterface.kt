@@ -38,20 +38,21 @@ interface ApiInterface{
         @Query("api_key") apiKey:String,
         @Path("movie_id") movieId:Int,
         @Path("page") page:Int
-    ):Callback<ReviewResponse>
+    ):Call<ReviewResponse>
 
     @GET("movie/{movie_id}/videos")
     fun getVideos(
         @Query("api_key") apiKey:String,
         @Path("movie_id") movieId:String
-    ):Callback<VideoResponse>
+    ):Call<VideoResponse>
 
     @GET("movie/{movie_id}/recommendations")
     fun getRecommendations(
+        @Path("movie_id") movieId:Int,
         @Query("api_key") apiKey:String,
-        @Query("page") page:Int,
-        @Path("movie_id") movieId:Int
-    ):Callback<MovieResponse>
+        @Query("page") page:Int
+
+    ):Call<MovieResponse>
 }
 
 object ApiClient{

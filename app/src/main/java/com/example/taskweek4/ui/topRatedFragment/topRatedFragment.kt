@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.fragment_homefragment.*
 
 class TopRatedFragment : Fragment() {
     lateinit var model: TopRatedViewModel
-    private val linearLayout = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+    private lateinit var linearLayout:LinearLayoutManager
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -42,6 +42,7 @@ class TopRatedFragment : Fragment() {
     private fun setRecyclerView() {
         movieRecyclerView.apply {
             adapter = model.movieAdapter
+            linearLayout =  LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             layoutManager = linearLayout
         }
         movieRecyclerView.scrollToPosition(model.lastPosition)

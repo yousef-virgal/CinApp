@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_homefragment.*
 class HomeFragment : Fragment() {
 
     lateinit var model: HomeFragmentViewModel
-    val linearLayout = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+    lateinit var linearLayout :LinearLayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -111,7 +111,7 @@ class HomeFragment : Fragment() {
 //                MovieAdabter(mutableListOf())
 //            else
             adapter=model.movieAdapter
-
+            linearLayout =  LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             layoutManager = linearLayout
 
         }

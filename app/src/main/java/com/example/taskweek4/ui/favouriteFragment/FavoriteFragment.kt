@@ -22,8 +22,7 @@ import kotlinx.android.synthetic.main.fragment_homefragment.*
 
 class FavoriteFragment: Fragment() {
     lateinit var model: FavoriteViewModel
-    val favMovieAdapter: FavoritesAdapter = FavoritesAdapter(MovieRepo.getFavorites() as MutableList<Movies>)
-    private val linearLayout = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+    private val favMovieAdapter: FavoritesAdapter = FavoritesAdapter(MovieRepo.getFavorites() as MutableList<Movies>)
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -49,7 +48,7 @@ class FavoriteFragment: Fragment() {
     private fun setRecyclerView() {
         favouriteRecyclerView.apply {
 
-            layoutManager = linearLayout
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             adapter = favMovieAdapter
 
         }

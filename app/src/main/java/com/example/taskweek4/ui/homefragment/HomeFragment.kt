@@ -32,8 +32,9 @@ class HomeFragment : Fragment() {
 
         model = ViewModelProvider(requireActivity()).get(HomeFragmentViewModel::class.java)
 
-         displayData()
-            setRecyclerView()
+        displayData()
+        setRecyclerView()
+
 
 //        spinnerListener()
 
@@ -121,18 +122,8 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         model.isFirstCreation= true
-        println("After Destroying home")
-        //checkFav(model.movieList)
-
+//        model.page =1
+//        model.movieAdapter.clearData()
     }
-    fun checkFav(movies: List<Movies>){
-
-       /* for(i in movies)
-            if(i.fav == true)
-                favToggleButton.isChecked = true
-            else
-                favToggleButton.isChecked = false*/
-    }
-
 
 }

@@ -1,10 +1,12 @@
 package com.example.taskweek4.ui.itemFragment
 
 import android.app.Application
+import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.taskweek4.data.models.ui.objects.Movies
+import com.example.taskweek4.data.models.ui.objects.Videos
 import com.example.taskweek4.recyclerview.RecomendationsAdapter
 import com.example.taskweek4.repository.ItemCallBack
 import com.example.taskweek4.repository.MovieRepo
@@ -17,7 +19,8 @@ class itemViewModel(application: Application) : AndroidViewModel(application), I
     val errorLiveData: LiveData<String>
         get() = _errorLiveData
     var page:Int = 1
-    val myAdapter: RecomendationsAdapter = RecomendationsAdapter(mutableListOf())
+
+
 
 
     fun getRecomendations(page:Int,movieId:Int){
@@ -28,6 +31,7 @@ class itemViewModel(application: Application) : AndroidViewModel(application), I
     override fun isReadyRecomendations(movies: List<Movies>) {
         _movieLiveData.value = movies
     }
+
 
     override fun failed(message: String) {
         _errorLiveData.value =message

@@ -6,10 +6,12 @@ import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.objects.Movies
+import com.example.taskweek4.repository.MovieRepo
 import com.squareup.picasso.Picasso
 
 
@@ -50,6 +52,22 @@ class SearchAdapter(val movies:MutableList<Movies>): RecyclerView.Adapter<Recycl
                 edt = pref.edit()
                 clickListener(position,edt,movies)
                 holder.itemView.findNavController().navigate(R.id.action_searchFragment_to_itemFragment)
+            }
+
+            holder.addButton.setOnClickListener {
+
+                movies[position].fav = true
+                MovieRepo.changeMovie(movies[position])
+                Toast.makeText(holder.itemView.context,"${movies[position].title} has been added to favs", Toast.LENGTH_SHORT).show()
+
+
+            }
+
+            holder.removeButton.setOnClickListener {
+                movies[position].fav = false
+                MovieRepo.changeMovie(movies[position])
+                Toast.makeText(holder.itemView.context,"${movies[position].title} has been removed to favs", Toast.LENGTH_SHORT).show()
+
             }
 
 

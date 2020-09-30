@@ -45,11 +45,8 @@ class HomeActivity : AppCompatActivity(), MyInterface {
             .findNavController(this, R.id.mainFragment)
         NavigationUI.setupWithNavController(navigationBar, navController)
 
-
-
         movieViewModel.loadMovieData("movie", movieViewModel.page)
         topRatedViewModel.loadTopRatedData(movieViewModel.page)
-       // favoriteViewModel.loadFavoriteData(movieViewModel.page)
 
 
 
@@ -59,7 +56,7 @@ class HomeActivity : AppCompatActivity(), MyInterface {
             this,
             {
                 bindHomeData(it)
-                println("movieViewModel, observe ,bindHomeData")
+
             }
         )
 
@@ -67,7 +64,6 @@ class HomeActivity : AppCompatActivity(), MyInterface {
             this,
             {
                 bindTopRatedData(it)
-                println("TopViewModel, observe ,bindTopRatedData")
             }
         )
 
@@ -85,10 +81,6 @@ class HomeActivity : AppCompatActivity(), MyInterface {
             Toast.makeText(this, movieViewModel.errorLiveData.value, Toast.LENGTH_SHORT).show()
         })
 
-        itemViewModel.movieLiveData.observe(this,{
-            itemViewModel.myAdapter.addItems(it)
-        })
-
 
         iconListener()
 
@@ -101,7 +93,6 @@ class HomeActivity : AppCompatActivity(), MyInterface {
                         searchViewModel.page = 1
                         searchViewModel.searchAdapter.clear()
                     }
-                    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
                     navController.navigate(R.id.searchFragment)
                     return true
                 }

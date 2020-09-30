@@ -5,10 +5,8 @@ import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.navigation.findNavController
-import android.widget.ToggleButton
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.objects.Movies
@@ -35,7 +33,8 @@ class MovieAdapter(private val movies: MutableList<Movies>): RecyclerView.Adapte
         val movieName:TextView = itemView.findViewById(R.id.movie_name)
         val movieScore:TextView = itemView.findViewById(R.id.movie_genre)
         val movieType:TextView = itemView.findViewById(R.id.movie_duration)
-        val favButton:ToggleButton = itemView.findViewById(R.id.favToggleButton)
+        val addButton:Button = itemView.findViewById(R.id.button2)
+        val removeButton: Button = itemView.findViewById(R.id.button)
 
     }
 
@@ -87,6 +86,8 @@ class MovieAdapter(private val movies: MutableList<Movies>): RecyclerView.Adapte
             holder.itemView.setOnClickListener {
                 pref = holder.itemView.context.getSharedPreferences("DeviceToken", MODE_PRIVATE)
                 edt = pref.edit()
+                edt.clear()
+                edt.apply()
                 clickListener(position,edt,movies)
                 holder.itemView.findNavController().navigate(R.id.action_homefragment_to_itemFragment)
             }
@@ -94,41 +95,20 @@ class MovieAdapter(private val movies: MutableList<Movies>): RecyclerView.Adapte
 
 
 
-            holder.favButton.setOnCheckedChangeListener { _, favChecked ->
+            holder.addButton.setOnClickListener {
 
-                println("favChecked = $favChecked")
-
-                /*if(movies[position].fav == true)
-                    holder.favButton.setBackgroundResource(R.drawable.ic_heart_empty)
-                if(movies[position].fav == false)
-                    holder.favButton.setBackgroundResource(R.drawable.ic_heart_fill)*/
-
-
-                movies[position].fav = favChecked
-
-                if(movies[position].fav == true)
-                    holder.favButton.setBackgroundResource(R.drawable.ic_heart_fill)
-                if(movies[position].fav == false)
-                    holder.favButton.setBackgroundResource(R.drawable.ic_heart_empty)
-
-
-               // Toast.makeText(holder.itemView.context, if( favChecked) " ${holder.movieName.text}  is added to Favorites" else " ${holder.movieName.text} is removed from Favorites", Toast.LENGTH_SHORT).show()
+                movies[position].fav = true
                 MovieRepo.changeMovie(movies[position])
+                Toast.makeText(holder.itemView.context,"${movies[position].title} has been added to favs",Toast.LENGTH_SHORT).show()
 
 
-
-               //favoriteViewModel.changeMovieFromViewModel(MovieRepo,movies[position])
-
-              //  holder.favButton.isChecked = !holder.favButton.isChecked
             }
 
-            if(movies[position].fav == true)
-            {
-                holder.favButton.setBackgroundResource(R.drawable.ic_heart_fill)
-                holder.favButton.isChecked = true
-            }
-            if(movies[position].fav == false) {
-                holder.favButton.setBackgroundResource(R.drawable.ic_heart_empty)
+            holder.removeButton.setOnClickListener {
+                movies[position].fav = false
+                MovieRepo.changeMovie(movies[position])
+                Toast.makeText(holder.itemView.context,"${movies[position].title} has been removed to favs",Toast.LENGTH_SHORT).show()
+
             }
             if (movies[position].mediaType == "movie")
                 holder.movieName.text = movies[position].title
@@ -221,12 +201,15 @@ fun clickListener(position:Int,edt: SharedPreferences.Editor,movies:List<Movies>
 
 
     edt.putString("posterPath", movies[position].posterPath)
+    edt.putString("backdropPath", movies[position].backdropPath)
     edt.putString("name", movies[position].name)
     edt.putString("title", movies[position].title)
     edt.putString("overView", movies[position].overview)
     edt.putFloat("rate", movies[position].voteAverage!!.toFloat())
+    edt.putFloat("voteCount", movies[position].voteCount!!.toFloat())
     edt.putString("releaseDate", movies[position].releaseDate)
-    edt.putInt("movieId", movies[position].movieId!!)
+    edt.putString("releaseDate", movies[position].releaseDate)
+    edt.putString("mediaType", movies[position].mediaType)
     edt.putBoolean("isFavored",movies[position].fav)
 
     edt.apply()

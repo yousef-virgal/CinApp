@@ -69,10 +69,4 @@ class SearchFragment : Fragment() {
 
         })
     }
-
-    override fun onDestroyView() {
-        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_USER
-        super.onDestroyView()
-    }
-
 }

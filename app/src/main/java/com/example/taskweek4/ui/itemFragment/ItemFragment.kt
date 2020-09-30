@@ -6,25 +6,35 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
+import com.example.taskweek4.data.models.ui.objects.Movies
+import com.example.taskweek4.recyclerview.RecomendationsAdapter
+import com.example.taskweek4.repository.MovieRepo
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_item.*
 
 
 class ItemFragment : Fragment() {
 
-    lateinit var prefs: SharedPreferences
+
     lateinit var model: itemViewModel
+    lateinit var prefs: SharedPreferences
+    val myAdapter: RecomendationsAdapter = RecomendationsAdapter(mutableListOf())
 
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setRecycler()
         model = ViewModelProvider(requireActivity()).get(itemViewModel::class.java)
+        prefs= requireContext().getSharedPreferences("DeviceToken", MODE_PRIVATE)
+        model.getRecomendations(model.page,prefs.getInt("movieId",1))
     }
 
     override fun onCreateView(
@@ -38,29 +48,39 @@ class ItemFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        prefs= requireContext().getSharedPreferences("DeviceToken", MODE_PRIVATE)
+
         Picasso.get()
-            .load("http://image.tmdb.org/t/p/w500"+prefs.getString("posterPath", null) )
+            .load("http://image.tmdb.org/t/p/w500"+prefs.getString("backdropPath", null) )
             .into(myImage)
         movieName.text = prefs.getString("title",null)
         releaseDate.text = prefs.getString("releaseDate",null)
         overView_text.text = prefs.getString("overView",null)
-        model.getRecomendations(model.page,prefs.getInt("movieId",0))
-        setRecycler()
+        ratingBar.rating = prefs.getFloat("rate", 0.0F)/2
+
+
+
+        model.movieLiveData.observe(this,{
+            myAdapter.addItems(it)
+        })
+
+        addButton.setOnClickListener {
+            MovieRepo.changeMovie(mapMovieData(prefs,true))
+            Toast.makeText(requireContext(),"${prefs.getString("title",null)} has been added to favs", Toast.LENGTH_SHORT).show()
+        }
+        removeButton.setOnClickListener {
+            MovieRepo.changeMovie(mapMovieData(prefs,false))
+            Toast.makeText(requireContext(),"${prefs.getString("title",null)} has been removed from favs", Toast.LENGTH_SHORT).show()
+        }
 
 
         scrollListener()
     }
 
 
-//    private fun bindData(movies:List<Movies>){
-//        myAdapter.addItems(movies)
-//
-//    }
-
     private fun setRecycler(){
         similarMoviesRecylerView.apply {
-            adapter =model.myAdapter
+
+            adapter =myAdapter
             layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         }
     }
@@ -79,10 +99,18 @@ class ItemFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        println("aaaaaa")
         super.onDestroyView()
         model.page=1
-        model.myAdapter.clear()
+        myAdapter.clear()
+    }
 
+    private fun mapMovieData(prefs: SharedPreferences, favCheck:Boolean): Movies {
+        return  Movies(
+            prefs.getInt("movieID",1), prefs.getFloat("rate", 0.0F).toDouble(), prefs.getString("title",null),
+            prefs.getString("releaseDate",null),prefs.getString("backdropPath",null),
+            prefs.getString("posterPath",null),prefs.getString("overView",null),
+            prefs.getString("mediaType",null),prefs.getFloat("voteCount", 1F).toDouble(),
+            prefs.getString("name",null),favCheck
+        )
     }
 }

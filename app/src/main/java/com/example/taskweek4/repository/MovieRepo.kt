@@ -87,18 +87,21 @@ object MovieRepo {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if(response.isSuccessful){
                     isLoadingRecomendations= false
-                    if(response.body()!!.results.isEmpty()) {
-                        if (page == 1) {
-                            val message = "No results found"
-                            itemCallBack.failed(message)
-                            return
-                        } else {
-                            val message = "No more Results"
-                            itemCallBack.failed(message)
-                            return
-                        }
-                    }
+//                    if(response.body()!!.results.isEmpty()) {
+//                        if (page == 1) {
+//                            val message = "No results found"
+//                            itemCallBack.failed(message)
+//                            return
+//                        } else {
+//                            val message = "No more Results"
+//                            itemCallBack.failed(message)
+//                            return
+//                        }
+//                    }
+                    println("ssssssssssss")
                     RecommendationsResponse = mapper.mapData(response.body()!!)
+                    println("bbbbbbb"+response.body()!!.toString())
+                    println(RecommendationsResponse.toString()+"AAAAAAAAA")
                     itemCallBack.isReadyRecomendations(RecommendationsResponse)
                     return
 
@@ -111,7 +114,6 @@ object MovieRepo {
                 t.printStackTrace()
                 val message ="An Error occurred while getting the data "
                 itemCallBack.failed(message)
-                itemCallBack.isReadyRecomendations(movieDataBase.movieDao().getMovies())
             }
 
         })
@@ -181,24 +183,24 @@ object MovieRepo {
         })
 
     }
-    fun getVideos(itemCallBack: ItemCallBack,movieId: Int){
-        val call:Call<VideoResponse> = apiInterface.getVideos(movieId,apiKey)
-        call.enqueue(object:Callback<VideoResponse>{
-            override fun onResponse(call: Call<VideoResponse>, response: Response<VideoResponse>) {
-                if(response.isSuccessful) {
-
-                    videoResponse = videoMapper.mapData(response.body()!!)
-                    itemCallBack.isReadyVideos(videoResponse)
-                }
-            }
-            override fun onFailure(call: Call<VideoResponse>, t: Throwable) {
-                t.printStackTrace()
-                val message ="An Error occurred while getting the data "
-                itemCallBack.failed(message)
-            }
-        })
-
-    }
+//    fun getVideos(itemCallBack: ItemCallBack,movieId: Int){
+//        val call:Call<VideoResponse> = apiInterface.getVideos(movieId,apiKey)
+//        call.enqueue(object:Callback<VideoResponse>{
+//            override fun onResponse(call: Call<VideoResponse>, response: Response<VideoResponse>) {
+//                if(response.isSuccessful) {
+//
+//                    videoResponse = videoMapper.mapData(response.body()!!)
+//                    itemCallBack.isReadyVideos(videoResponse)
+//                }
+//            }
+//            override fun onFailure(call: Call<VideoResponse>, t: Throwable) {
+//                t.printStackTrace()
+//                val message ="An Error occurred while getting the data "
+//                itemCallBack.failed(message)
+//            }
+//        })
+//
+//    }
     fun getFavorites():List<Movies>{
         return movieDataBase.movieDao().getFavorites()
     }
@@ -227,7 +229,6 @@ interface TopRatedCallBack {
 
 interface ItemCallBack{
     fun isReadyRecomendations(movies:List<Movies>)
-    fun isReadyVideos(videos:List<Videos>)
     fun failed(message:String)
 }
 

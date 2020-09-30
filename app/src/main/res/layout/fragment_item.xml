@@ -87,16 +87,27 @@
                 app:layout_constraintTop_toBottomOf="@id/movieName"
                 android:isIndicator="true"
                 />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:layout_constraintStart_toEndOf="@id/ratingBar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/ratingBar"
+            <ToggleButton
+                android:id="@+id/favoriteToggleButton"
+
+                android:layout_width="69dp"
+                android:layout_height="66dp"
+
+
+
+
+
+
+                android:background="@drawable/toggle_heart_drawable"
+                android:checked="false"
+
+                android:textOff=""
+                android:textOn=""
                 app:layout_constraintBottom_toBottomOf="@id/ratingBar"
 
-                tools:src="@drawable/ic_baseline_favorite_border_24"/>
+                app:layout_constraintStart_toEndOf="@id/ratingBar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/movieName" />
 
             <TextView
                 android:layout_width="wrap_content"

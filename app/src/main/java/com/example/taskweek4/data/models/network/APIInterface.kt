@@ -35,9 +35,8 @@ interface ApiInterface{
 
     @GET("movie/{movie_id}/reviews")
     fun getReviews(
-        @Query("api_key") apiKey:String,
         @Path("movie_id") movieId:Int,
-        @Path("page") page:Int
+        @Query("api_key") apiKey:String
     ):Call<ReviewResponse>
 
     @GET("movie/{movie_id}/videos")

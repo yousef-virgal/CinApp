@@ -86,8 +86,6 @@ class MovieAdapter(private val movies: MutableList<Movies>): RecyclerView.Adapte
             holder.itemView.setOnClickListener {
                 pref = holder.itemView.context.getSharedPreferences("DeviceToken", MODE_PRIVATE)
                 edt = pref.edit()
-                edt.clear()
-                edt.apply()
                 clickListener(position,edt,movies)
                 holder.itemView.findNavController().navigate(R.id.action_homefragment_to_itemFragment)
             }
@@ -199,7 +197,7 @@ class MovieAdapter(private val movies: MutableList<Movies>): RecyclerView.Adapte
 
 fun clickListener(position:Int,edt: SharedPreferences.Editor,movies:List<Movies>){
 
-
+    edt.clear()
     edt.putString("posterPath", movies[position].posterPath)
     edt.putString("backdropPath", movies[position].backdropPath)
     edt.putString("name", movies[position].name)
@@ -208,7 +206,7 @@ fun clickListener(position:Int,edt: SharedPreferences.Editor,movies:List<Movies>
     edt.putFloat("rate", movies[position].voteAverage!!.toFloat())
     edt.putFloat("voteCount", movies[position].voteCount!!.toFloat())
     edt.putString("releaseDate", movies[position].releaseDate)
-    edt.putString("releaseDate", movies[position].releaseDate)
+    edt.putInt("movieId", movies[position].movieId!!)
     edt.putString("mediaType", movies[position].mediaType)
     edt.putBoolean("isFavored",movies[position].fav)
 

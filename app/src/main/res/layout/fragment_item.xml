@@ -175,36 +175,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Trailers and Videos"
-                android:layout_marginTop="40dp"
-                android:layout_marginStart="20dp"
-                android:id="@+id/trailer"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/similarMoviesRecylerView"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:textAllCaps="false"
-                android:fontFamily="cursive"
-                android:textColor="@android:color/darker_gray"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:paddingHorizontal="20dp"
-                android:id="@+id/trailerMoviesRecylerView"
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/trailer"
-                app:layout_constraintEnd_toEndOf="parent"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:text="Reviews"
                 android:layout_marginTop="40dp"
                 android:layout_marginStart="20dp"
                 android:id="@+id/ReviewsText"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/trailerMoviesRecylerView"
+                app:layout_constraintTop_toBottomOf="@id/similarMoviesRecylerView"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 android:textAllCaps="false"

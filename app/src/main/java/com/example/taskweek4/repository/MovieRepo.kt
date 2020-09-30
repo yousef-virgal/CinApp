@@ -5,10 +5,13 @@ import com.example.taskweek4.data.models.database.MovieDataBase
 import com.example.taskweek4.data.models.network.ApiClient
 import com.example.taskweek4.data.models.network.ApiInterface
 import com.example.taskweek4.data.models.remote.MovieResponse
+import com.example.taskweek4.data.models.remote.ReviewResponse
 import com.example.taskweek4.data.models.remote.VideoResponse
 import com.example.taskweek4.data.models.ui.mappers.Mapper
+import com.example.taskweek4.data.models.ui.mappers.ReviewMapper
 import com.example.taskweek4.data.models.ui.mappers.VideoMapper
 import com.example.taskweek4.data.models.ui.objects.Movies
+import com.example.taskweek4.data.models.ui.objects.Reviews
 import com.example.taskweek4.data.models.ui.objects.Videos
 import retrofit2.Call
 import retrofit2.Callback
@@ -21,6 +24,7 @@ object MovieRepo {
     private val retrofitObject = ApiClient.getRetrofit()
     private val mapper: Mapper by lazy { Mapper() }
     private val videoMapper: VideoMapper by lazy { VideoMapper() }
+    private val reviewMapper: ReviewMapper by lazy { ReviewMapper() }
     private val apiInterface:ApiInterface by lazy {
         retrofitObject!!.create(ApiInterface::class.java)
     }
@@ -30,9 +34,35 @@ object MovieRepo {
     private var isLoadingRecomendations:Boolean =false
     lateinit var movieResponse: List<Movies>
     lateinit var videoResponse: List<Videos>
+    lateinit var reviewResponse: List<Reviews>
     lateinit var searchResponse:List<Movies>
     lateinit var RecommendationsResponse:List<Movies>
     private lateinit var movieDataBase: MovieDataBase
+
+    fun getReviews(itemCallBack:ItemCallBack,movieId:Int){
+        val call:Call<ReviewResponse> = apiInterface.getReviews(movieId,apiKey)
+        call.enqueue(object : Callback<ReviewResponse> {
+            override fun onResponse(call: Call<ReviewResponse>,response: Response<ReviewResponse>) {
+                if (response.isSuccessful) {
+                    if (response.body()!!.myResults.isEmpty()) {
+                        val message = "No reviews found"
+                        itemCallBack.failed(message)
+                        return
+                    }
+                    reviewResponse = reviewMapper.mapData(response.body()!!)
+                    itemCallBack.isReadyReviews(reviewResponse)
+                    return
+                }
+            }
+
+            override fun onFailure(call: Call<ReviewResponse>, t: Throwable) {
+                t.printStackTrace()
+                val message = "An Error occurred while getting the data "
+                itemCallBack.failed(message)
+            }
+        })
+
+    }
 
 
     fun getData(movieCallBack: MovieCallBack,currentMediaType:String="movie",page:Int) {
@@ -48,8 +78,6 @@ object MovieRepo {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if(response.isSuccessful) {
                     isLoadingHome=false
-
-                    println(response.body()!!)
                     movieResponse = mapper.mapData(response.body()!!)
                     movieDataBase.movieDao().addMovies(movieResponse)
                     movieCallBack.isReadyHome(movieResponse)
@@ -87,21 +115,18 @@ object MovieRepo {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if(response.isSuccessful){
                     isLoadingRecomendations= false
-//                    if(response.body()!!.results.isEmpty()) {
-//                        if (page == 1) {
-//                            val message = "No results found"
-//                            itemCallBack.failed(message)
-//                            return
-//                        } else {
-//                            val message = "No more Results"
-//                            itemCallBack.failed(message)
-//                            return
-//                        }
-//                    }
-                    println("ssssssssssss")
+                    if(response.body()!!.results.isEmpty()) {
+                        if (page == 1) {
+                            val message = "No results found"
+                            itemCallBack.failed(message)
+                            return
+                        } else {
+                            val message = "No more Results"
+                            itemCallBack.failed(message)
+                            return
+                        }
+                    }
                     RecommendationsResponse = mapper.mapData(response.body()!!)
-                    println("bbbbbbb"+response.body()!!.toString())
-                    println(RecommendationsResponse.toString()+"AAAAAAAAA")
                     itemCallBack.isReadyRecomendations(RecommendationsResponse)
                     return
 
@@ -229,6 +254,7 @@ interface TopRatedCallBack {
 
 interface ItemCallBack{
     fun isReadyRecomendations(movies:List<Movies>)
+    fun isReadyReviews(reviews:List<Reviews>)
     fun failed(message:String)
 }
 

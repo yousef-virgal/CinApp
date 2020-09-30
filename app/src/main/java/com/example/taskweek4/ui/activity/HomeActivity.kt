@@ -60,12 +60,20 @@ class HomeActivity : AppCompatActivity(), MyInterface {
             }
         )
 
+        movieViewModel.errorLiveData.observe(this, {
+            Toast.makeText(this, movieViewModel.errorLiveData.value, Toast.LENGTH_SHORT).show()
+        })
+
+
         topRatedViewModel.topRatedLiveData.observe(
             this,
             {
                 bindTopRatedData(it)
             }
         )
+        topRatedViewModel.errorLiveData.observe(this, {
+            Toast.makeText(this, topRatedViewModel.errorLiveData.value, Toast.LENGTH_SHORT).show()
+        })
 
         searchViewModel.searchLiveData.observe(this, {
             bindSearchData(it)

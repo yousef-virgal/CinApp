@@ -32,37 +32,35 @@ class HomeFragment : Fragment() {
 
         model = ViewModelProvider(requireActivity()).get(HomeFragmentViewModel::class.java)
 
-        displayData()
+//        displayData()
         setRecyclerView()
+        scrollListener()
 
 
 //        spinnerListener()
 
 
 
-        model.errorLiveData.observe(viewLifecycleOwner, {
-            Toast.makeText(context, model.errorLiveData.value, Toast.LENGTH_SHORT).show()
-        })
 
 
-        scrollListener()
+
 
 
 
 
     }
 
-    private fun displayData() {
-        val list = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_list_item_1, resources.getStringArray(R.array.spinner2)
-        )
-
-        list.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-        spinner1.adapter = list
-
-    }
+//    private fun displayData() {
+//        val list = ArrayAdapter(
+//            requireContext(),
+//            android.R.layout.simple_list_item_1, resources.getStringArray(R.array.spinner2)
+//        )
+//
+//        list.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//
+//        spinner1.adapter = list
+//
+//    }
 
 
 
@@ -96,7 +94,7 @@ class HomeFragment : Fragment() {
                 model.lastPosition = linearLayout.findFirstVisibleItemPosition()
                 if(!movieRecyclerView.canScrollVertically(1)&&!(model.isLoading())){
                     model.page +=1
-                    model.loadMovieData(spinner1.selectedItem.toString(),model.page)
+                    model.loadMovieData("movie",model.page)
                 }
             }
 

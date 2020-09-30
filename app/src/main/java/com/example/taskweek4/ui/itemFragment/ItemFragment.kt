@@ -14,7 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.objects.Movies
+import com.example.taskweek4.data.models.ui.objects.Reviews
 import com.example.taskweek4.recyclerview.RecomendationsAdapter
+import com.example.taskweek4.recyclerview.ReviewAdapter
 import com.example.taskweek4.repository.MovieRepo
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_item.*
@@ -25,16 +27,18 @@ class ItemFragment : Fragment() {
 
     lateinit var model: itemViewModel
     lateinit var prefs: SharedPreferences
-    val myAdapter: RecomendationsAdapter = RecomendationsAdapter(mutableListOf())
+
 
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setRecycler()
+
         model = ViewModelProvider(requireActivity()).get(itemViewModel::class.java)
         prefs= requireContext().getSharedPreferences("DeviceToken", MODE_PRIVATE)
+        setRecycler()
         model.getRecomendations(model.page,prefs.getInt("movieId",1))
+        model.getReviews(prefs.getInt("movieId",1))
     }
 
     override fun onCreateView(
@@ -60,9 +64,18 @@ class ItemFragment : Fragment() {
 
 
         model.movieLiveData.observe(this,{
-            myAdapter.addItems(it)
+            model.myAdapter.addItems(it)
+        })
+        model.errorLiveData.observe(this,{
+            Toast.makeText(requireContext(),model.errorLiveData.value.toString(),Toast.LENGTH_SHORT).show()
         })
 
+        model.reviewLiveData.observe(this,{
+            setReviewRecycler(it)
+        })
+        model.reviwErrorLiveData.observe(this,{
+            Toast.makeText(requireContext(),model.reviwErrorLiveData.value.toString(),Toast.LENGTH_SHORT).show()
+        })
         addButton.setOnClickListener {
             MovieRepo.changeMovie(mapMovieData(prefs,true))
             Toast.makeText(requireContext(),"${prefs.getString("title",null)} has been added to favs", Toast.LENGTH_SHORT).show()
@@ -80,8 +93,15 @@ class ItemFragment : Fragment() {
     private fun setRecycler(){
         similarMoviesRecylerView.apply {
 
-            adapter =myAdapter
+            adapter =model.myAdapter
             layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        }
+    }
+    private fun setReviewRecycler(list:List<Reviews>){
+        reviewMoviesRecylerView.apply {
+
+            adapter =ReviewAdapter(list)
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         }
     }
 
@@ -101,7 +121,7 @@ class ItemFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         model.page=1
-        myAdapter.clear()
+        model.myAdapter.clear()
     }
 
     private fun mapMovieData(prefs: SharedPreferences, favCheck:Boolean): Movies {

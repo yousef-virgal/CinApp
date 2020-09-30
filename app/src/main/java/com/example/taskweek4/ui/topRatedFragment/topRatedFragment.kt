@@ -30,9 +30,7 @@ class TopRatedFragment : Fragment() {
         setRecyclerView()
 
 
-        model.errorLiveData.observe(viewLifecycleOwner, {
-            Toast.makeText(context, model.errorLiveData.value, Toast.LENGTH_SHORT).show()
-        })
+
 
         scrollListener()
 

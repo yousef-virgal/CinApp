@@ -39,13 +39,12 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
 
     fun loadMovieData(spinnerData:String ,page:Int){
 
-        if (spinnerData == currentSpinner && this::movieData.isInitialized&&page==currentPage) {
+        if ( this::movieData.isInitialized&&page==currentPage) {
            _movieLiveData.value = movieData
             return
         }
-        currentSpinner = spinnerData
         currentPage = page
-        MovieRepo.getData(this,currentSpinner!!,page)
+        MovieRepo.getData(this,spinnerData,page)
     }
 
 

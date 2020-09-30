@@ -62,34 +62,32 @@ class HomeActivity : AppCompatActivity(), MyInterface {
         searchTextListener()
 
         movieViewModel.movieLiveData.observe(
-            this,
-            {
-                bindHomeData(it)
-                println("movieViewModel, observe ,bindHomeData")
-            }
-        )
+            this
+        ) {
+            bindHomeData(it)
+            println("movieViewModel, observe ,bindHomeData")
+        }
 
         topRatedViewModel.topRatedLiveData.observe(
-            this,
-            {
-                bindTopRatedData(it)
-                println("TopViewModel, observe ,bindTopRatedData")
-            }
-        )
+            this
+        ) {
+            bindTopRatedData(it)
+            println("TopViewModel, observe ,bindTopRatedData")
+        }
 
-        searchViewModel.searchLiveData.observe(this, {
+        searchViewModel.searchLiveData.observe(this) {
             bindSearchData(it)
 
-        })
+        }
 
-        searchViewModel.errorLiveData.observe(this,
-            {
-                Toast.makeText(this, searchViewModel.errorLiveData.value, Toast.LENGTH_SHORT).show()
-            })
+        searchViewModel.errorLiveData.observe(this
+        ) {
+            Toast.makeText(this, searchViewModel.errorLiveData.value, Toast.LENGTH_SHORT).show()
+        }
 
-        movieViewModel.errorLiveData.observe(this, {
+        movieViewModel.errorLiveData.observe(this) {
             Toast.makeText(this, movieViewModel.errorLiveData.value, Toast.LENGTH_SHORT).show()
-        })
+        }
 
 
         iconListener()

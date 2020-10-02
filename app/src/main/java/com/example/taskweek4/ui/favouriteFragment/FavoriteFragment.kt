@@ -13,7 +13,7 @@ import com.example.taskweek4.recyclerview.FavoritesAdapter
 import kotlinx.android.synthetic.main.fragment_favourite.*
 
 class FavoriteFragment: Fragment() {
-    lateinit var favMovieAdapter: FavoritesAdapter
+    private lateinit var favMovieAdapter: FavoritesAdapter
     private lateinit var model: FavoriteViewModel
 
 

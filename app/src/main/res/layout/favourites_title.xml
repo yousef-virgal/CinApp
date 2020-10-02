@@ -14,6 +14,6 @@
         android:textAlignment="center"
         android:textSize="22sp"
         android:fontFamily="cursive"
-        android:text="Favourites" />
+        android:text="@string/favourites_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,7 +20,7 @@
         android:id="@+id/margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" : "
+        android:text="@string/colon_text"
         android:fontFamily="cursive"
         android:textSize="22sp"
         app:layout_constraintStart_toEndOf="@+id/reviwer"
@@ -36,6 +36,6 @@
         android:textAllCaps="false"
         android:fontFamily="cursive"
         android:scrollHorizontally="false"
-        tools:text="nnnnnnnnnnnnnnnn"/>
+        tools:text="text"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,19 +13,16 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
 
     private val _movieLiveData : MutableLiveData<List<Movies>> by lazy { MutableLiveData<List<Movies>>() }
     private val _errorLiveData : MutableLiveData<String> by lazy { MutableLiveData<String>() }
-     val movieList:MutableList<Movies> = mutableListOf()
+     private val movieList:MutableList<Movies> = mutableListOf()
     val movieLiveData: LiveData<List<Movies>>
         get() = _movieLiveData
     val errorLiveData: LiveData<String>
         get() = _errorLiveData
 
     private lateinit var movieData: List<Movies>
-
-    var currentSpinner :String ?=null
     private var currentPage= 1
     var lastPosition:Int =0
     var page=1
-    var isFirst =true
     var isFirstCreation =false
     val movieAdapter: MovieAdapter = MovieAdapter(mutableListOf())
 

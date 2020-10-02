@@ -22,9 +22,6 @@ class MovieAdapter(private val movies: MutableList<Movies>): RecyclerView.Adapte
     private val loadingViewHolder =2
     private val blankViewHolder =3
     private var myPosition:Int= 0
-    var tempCheck:Boolean = false
-   //  var favoriteViewModel: FavoriteViewModel =  ViewModelProvider().get(
-      //  FavoriteViewModel::class.java)
 
 
     class NormalMovieHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -165,9 +162,6 @@ class MovieAdapter(private val movies: MutableList<Movies>): RecyclerView.Adapte
         notifyDataSetChanged()
     }
 
-    fun clearData(){
-        movies.clear()
-    }
 
 
 

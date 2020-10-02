@@ -9,13 +9,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.objects.Movies
 import com.example.taskweek4.data.models.ui.objects.Reviews
-import com.example.taskweek4.recyclerview.RecomendationsAdapter
 import com.example.taskweek4.recyclerview.ReviewAdapter
 import com.example.taskweek4.repository.MovieRepo
 import com.squareup.picasso.Picasso
@@ -25,7 +23,7 @@ import kotlinx.android.synthetic.main.fragment_item.*
 class ItemFragment : Fragment() {
 
 
-    lateinit var model: itemViewModel
+    lateinit var model: ItemViewModel
     lateinit var prefs: SharedPreferences
 
 
@@ -34,10 +32,10 @@ class ItemFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        model = ViewModelProvider(requireActivity()).get(itemViewModel::class.java)
+        model = ViewModelProvider(requireActivity()).get(ItemViewModel::class.java)
         prefs= requireContext().getSharedPreferences("DeviceToken", MODE_PRIVATE)
         setRecycler()
-        model.getRecomendations(model.page,prefs.getInt("movieId",1))
+        model.getRecommendations(model.page,prefs.getInt("movieId",1))
         model.getReviews(prefs.getInt("movieId",1))
     }
 
@@ -62,20 +60,11 @@ class ItemFragment : Fragment() {
         ratingBar.rating = prefs.getFloat("rate", 0.0F)/2
 
 
-
-        model.movieLiveData.observe(this,{
-            model.myAdapter.addItems(it)
-        })
-        model.errorLiveData.observe(this,{
-            Toast.makeText(requireContext(),model.errorLiveData.value.toString(),Toast.LENGTH_SHORT).show()
-        })
-
-        model.reviewLiveData.observe(this,{
+        model.reviewLiveData.observe(viewLifecycleOwner,{
             setReviewRecycler(it)
         })
-        model.reviwErrorLiveData.observe(this,{
-            Toast.makeText(requireContext(),model.reviwErrorLiveData.value.toString(),Toast.LENGTH_SHORT).show()
-        })
+
+
         addButton.setOnClickListener {
             MovieRepo.changeMovie(mapMovieData(prefs,true))
             Toast.makeText(requireContext(),"${prefs.getString("title",null)} has been added to favs", Toast.LENGTH_SHORT).show()
@@ -109,9 +98,9 @@ class ItemFragment : Fragment() {
 
         similarMoviesRecylerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                if(!similarMoviesRecylerView.canScrollVertically(1)&&!(model.isLoadingRecomendations())) {
+                if(!similarMoviesRecylerView.canScrollVertically(1)&&!(model.isLoadingRecommendations())) {
                     model.page = model.page.plus(1)
-                    model.getRecomendations(model.page,prefs.getInt("movieId",0))
+                    model.getRecommendations(model.page,prefs.getInt("movieId",0))
                 }
             }
 

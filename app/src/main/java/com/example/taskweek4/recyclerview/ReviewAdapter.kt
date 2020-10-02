@@ -11,7 +11,7 @@ import com.example.taskweek4.data.models.ui.objects.Reviews
 class ReviewAdapter(val list:List<Reviews>): RecyclerView.Adapter<ReviewAdapter.MyViewHolder>() {
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val authoer: TextView = itemView.findViewById(R.id.reviwer)
+        val author: TextView = itemView.findViewById(R.id.reviwer)
         val content: TextView = itemView.findViewById(R.id.content)
     }
 
@@ -21,7 +21,7 @@ class ReviewAdapter(val list:List<Reviews>): RecyclerView.Adapter<ReviewAdapter.
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.authoer.text = list[position].authorName
+        holder.author.text = list[position].authorName
         holder.content.text = list[position].contentText
     }
 

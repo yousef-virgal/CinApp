@@ -12,4 +12,22 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="movieLiteraltext">movie</string>
+    <string name="top_rated_text">Top Rated</string>
+    <string name="where_all_the_movies_lie_text">where all the movies lie</string>
+    <string name="cinapp_text">CinApp</string>
+    <string name="applogo_text">appLogo</string>
+    <string name="colon_text">:</string>
+    <string name="image_for_recommendation_item_text">Image for Recomendation Item</string>
+    <string name="search_text">Search</string>
+    <string name="icon_image_text">icon_image</string>
+    <string name="favourites_text">Favourites</string>
+    <string name="poster1_text">poster1</string>
+    <string name="white_background_text">white_background</string>
+    <string name="remove_from_favs_text">remove from favs</string>
+    <string name="add_to_favs_text">add to favs</string>
+    <string name="margin_text">|</string>
+    <string name="cinapp_app_text">CinApp</string>
+    <string name="home_menu_text">Home</string>
+    <string name="top_rated_menu_text">Top Rated</string>
+    <string name="favourites_menu_text">Favourites</string>
 </resources>

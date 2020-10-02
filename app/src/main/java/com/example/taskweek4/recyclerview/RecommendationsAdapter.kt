@@ -13,17 +13,17 @@ import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.objects.Movies
 import com.squareup.picasso.Picasso
 
-class RecomendationsAdapter(val movies:MutableList<Movies>):
+class RecommendationsAdapter(val movies:MutableList<Movies>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val loadingViewHolder =2
     private val normalViewHolder =1
     private lateinit var  pref: SharedPreferences
     private lateinit var edt: SharedPreferences.Editor
-    class itemHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
-        val image:ImageView = itemView.findViewById<ImageView>(R.id.my_Image)
-        val text: TextView = itemView.findViewById<TextView>(R.id.myText)
+        val image:ImageView = itemView.findViewById(R.id.my_Image)
+        val text: TextView = itemView.findViewById(R.id.myText)
 
     }
 
@@ -34,7 +34,7 @@ class RecomendationsAdapter(val movies:MutableList<Movies>):
                 val v: View =
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.recomendationsitem, parent, false)
-                return itemHolder(v)
+                return ItemHolder(v)
             }
             2 -> {
                 val v: View =
@@ -45,14 +45,14 @@ class RecomendationsAdapter(val movies:MutableList<Movies>):
                 val v: View =
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.recomendationsitem, parent, false)
-                return itemHolder(v)
+                return ItemHolder(v)
 
             }
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if(holder is itemHolder) {
+        if(holder is ItemHolder) {
             if (movies[position].posterPath != null) {
                 Picasso.get()
                     .load("http://image.tmdb.org/t/p/w500" + movies[position].posterPath)

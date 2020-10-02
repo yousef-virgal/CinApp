@@ -20,7 +20,8 @@
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
             tools:src="@drawable/download"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:contentDescription="@string/poster1_text" />
 
     </androidx.cardview.widget.CardView>
 
@@ -44,7 +45,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
-            tools:src="@drawable/download" />
+            tools:src="@drawable/download"
+            android:contentDescription="@string/poster1_text" />
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -64,7 +66,8 @@
             android:scaleType="fitXY"
             android:layout_width="match_parent"
             tools:src="@drawable/download"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:contentDescription="@string/poster1_text" />
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

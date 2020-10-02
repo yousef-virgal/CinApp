@@ -1,7 +1,6 @@
 package com.example.taskweek4.recyclerview
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +16,6 @@ import com.synnapps.carouselview.CarouselView
 
 
 class TopRatedAdapter(val movies:MutableList<Movies>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private lateinit var intent: Intent
 
     private val titleViewHolder:Int =0
     private val normalViewHolder:Int =1

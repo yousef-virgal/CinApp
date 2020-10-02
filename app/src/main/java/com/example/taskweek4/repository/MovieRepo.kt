@@ -6,13 +6,10 @@ import com.example.taskweek4.data.models.network.ApiClient
 import com.example.taskweek4.data.models.network.ApiInterface
 import com.example.taskweek4.data.models.remote.MovieResponse
 import com.example.taskweek4.data.models.remote.ReviewResponse
-import com.example.taskweek4.data.models.remote.VideoResponse
 import com.example.taskweek4.data.models.ui.mappers.Mapper
 import com.example.taskweek4.data.models.ui.mappers.ReviewMapper
-import com.example.taskweek4.data.models.ui.mappers.VideoMapper
 import com.example.taskweek4.data.models.ui.objects.Movies
 import com.example.taskweek4.data.models.ui.objects.Reviews
-import com.example.taskweek4.data.models.ui.objects.Videos
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,7 +20,6 @@ object MovieRepo {
 
     private val retrofitObject = ApiClient.getRetrofit()
     private val mapper: Mapper by lazy { Mapper() }
-    private val videoMapper: VideoMapper by lazy { VideoMapper() }
     private val reviewMapper: ReviewMapper by lazy { ReviewMapper() }
     private val apiInterface:ApiInterface by lazy {
         retrofitObject!!.create(ApiInterface::class.java)
@@ -31,9 +27,8 @@ object MovieRepo {
     private var isLoadingHome:Boolean =false
     private var isLoadingSearch:Boolean =false
     private var isLoadingTopRated:Boolean =false
-    private var isLoadingRecomendations:Boolean =false
+    private var isLoadingRecommendations:Boolean =false
     lateinit var movieResponse: List<Movies>
-    lateinit var videoResponse: List<Videos>
     lateinit var reviewResponse: List<Reviews>
     lateinit var searchResponse:List<Movies>
     lateinit var RecommendationsResponse:List<Movies>
@@ -108,13 +103,13 @@ object MovieRepo {
         return isLoadingTopRated
     }
 
-    fun getRecomendations(itemCallBack:ItemCallBack,movieId:Int,page:Int){
-        isLoadingRecomendations =true
+    fun getRecommendations(itemCallBack:ItemCallBack, movieId:Int, page:Int){
+        isLoadingRecommendations =true
         val call:Call<MovieResponse> = apiInterface.getRecommendations(movieId,apiKey,page)
         call.enqueue(object : Callback<MovieResponse> {
             override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 if(response.isSuccessful){
-                    isLoadingRecomendations= false
+                    isLoadingRecommendations= false
                     if(response.body()!!.results.isEmpty()) {
                         if (page == 1) {
                             val message = "No results found"
@@ -127,7 +122,7 @@ object MovieRepo {
                         }
                     }
                     RecommendationsResponse = mapper.mapData(response.body()!!)
-                    itemCallBack.isReadyRecomendations(RecommendationsResponse)
+                    itemCallBack.isReadyRecommendations(RecommendationsResponse)
                     return
 
 
@@ -135,7 +130,7 @@ object MovieRepo {
                 }
 
             override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
-                isLoadingRecomendations=false
+                isLoadingRecommendations=false
                 t.printStackTrace()
                 val message ="An Error occurred while getting the data "
                 itemCallBack.failed(message)
@@ -208,32 +203,14 @@ object MovieRepo {
         })
 
     }
-//    fun getVideos(itemCallBack: ItemCallBack,movieId: Int){
-//        val call:Call<VideoResponse> = apiInterface.getVideos(movieId,apiKey)
-//        call.enqueue(object:Callback<VideoResponse>{
-//            override fun onResponse(call: Call<VideoResponse>, response: Response<VideoResponse>) {
-//                if(response.isSuccessful) {
-//
-//                    videoResponse = videoMapper.mapData(response.body()!!)
-//                    itemCallBack.isReadyVideos(videoResponse)
-//                }
-//            }
-//            override fun onFailure(call: Call<VideoResponse>, t: Throwable) {
-//                t.printStackTrace()
-//                val message ="An Error occurred while getting the data "
-//                itemCallBack.failed(message)
-//            }
-//        })
-//
-//    }
     fun getFavorites():List<Movies>{
         return movieDataBase.movieDao().getFavorites()
     }
     fun changeMovie(movie: Movies){
          movieDataBase.movieDao().changeMovie(movie)
     }
-    fun isLoadingRecomendations():Boolean{
-         return isLoadingRecomendations
+    fun isLoadingRecommendations():Boolean{
+         return isLoadingRecommendations
     }
 }
 
@@ -253,7 +230,7 @@ interface TopRatedCallBack {
 }
 
 interface ItemCallBack{
-    fun isReadyRecomendations(movies:List<Movies>)
+    fun isReadyRecommendations(movies:List<Movies>)
     fun isReadyReviews(reviews:List<Reviews>)
     fun failed(message:String)
 }

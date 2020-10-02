@@ -1,9 +1,6 @@
 package com.example.taskweek4.ui.activity
 
-
-import android.content.pm.ActivityInfo
 import android.os.Bundle
-
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
@@ -11,24 +8,23 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.observe
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.example.taskweek4.R
 import com.example.taskweek4.data.models.ui.objects.Movies
 import com.example.taskweek4.ui.homefragment.HomeFragmentViewModel
+import com.example.taskweek4.ui.itemFragment.ItemViewModel
 import com.example.taskweek4.ui.searchFragment.SearchFragmentViewModel
 import com.example.taskweek4.ui.topRatedFragment.TopRatedViewModel
-import com.example.taskweek4.ui.itemFragment.itemViewModel
 import kotlinx.android.synthetic.main.mainactivity.*
 
-class HomeActivity : AppCompatActivity(), MyInterface {
+class HomeActivity : AppCompatActivity(), SearchCallbackInterface {
 
 
     private val movieViewModel: HomeFragmentViewModel by viewModels()
     private val searchViewModel: SearchFragmentViewModel by viewModels()
     private val topRatedViewModel: TopRatedViewModel by viewModels()
-    private val itemViewModel: itemViewModel by viewModels()
+    private val itemViewModel: ItemViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,6 +83,17 @@ class HomeActivity : AppCompatActivity(), MyInterface {
 
         movieViewModel.errorLiveData.observe(this, {
             Toast.makeText(this, movieViewModel.errorLiveData.value, Toast.LENGTH_SHORT).show()
+        })
+
+        itemViewModel.movieLiveData.observe(this,{
+            itemViewModel.myAdapter.addItems(it)
+        })
+        itemViewModel.errorLiveData.observe(this,{
+            Toast.makeText(this,itemViewModel.errorLiveData.value.toString(),Toast.LENGTH_SHORT).show()
+        })
+
+        itemViewModel.reviewErrorLiveData.observe(this,{
+            Toast.makeText(this,itemViewModel.reviewErrorLiveData.value.toString(),Toast.LENGTH_SHORT).show()
         })
 
 
@@ -150,8 +157,9 @@ class HomeActivity : AppCompatActivity(), MyInterface {
     }
 
 
+
 }
-interface MyInterface{
+interface SearchCallbackInterface{
     fun getText():String
 }
 

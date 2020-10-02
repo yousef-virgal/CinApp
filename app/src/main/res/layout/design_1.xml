@@ -13,7 +13,7 @@
        android:id="@+id/cardView"
        android:layout_marginTop="20dp"
        android:layout_marginBottom="20dp"
-       android:layout_marginLeft="15dp"
+       android:layout_marginStart="15dp"
        app:cardCornerRadius="10dp">
 
        <ImageView
@@ -21,21 +21,22 @@
            android:layout_width="match_parent"
            android:layout_height="match_parent"
            android:scaleType="centerCrop"
-           tools:src="@drawable/download" />
+           tools:src="@drawable/download"
+           android:contentDescription="@string/poster1_text" />
    </androidx.cardview.widget.CardView>
     <ImageView
         android:layout_width="240dp"
         android:layout_height="150dp"
-        android:layout_toRightOf="@+id/cardView"
+        android:layout_toEndOf="@+id/cardView"
         android:src="@drawable/rounded_background"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/white_background_text" />
     <TextView
         android:layout_width="220dp"
         android:layout_height="wrap_content"
         tools:text="Joker"
         android:id="@+id/movie_name"
-        android:layout_weight="1"
         android:ellipsize="none"
         android:maxLines="100"
         android:scrollHorizontally="false"
@@ -52,8 +53,8 @@
         android:layout_below="@+id/movie_name"
         tools:text="Crime,Thriller"
         android:id="@+id/movie_genre"
-        android:layout_toRightOf="@+id/cardView"
-        android:layout_marginLeft="30dp"
+        android:layout_toEndOf="@+id/cardView"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="15dp"
         android:textSize="15sp"
         />
@@ -61,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/slash"
-        android:text="|"
+        android:text="@string/margin_text"
         android:textColor="@android:color/darker_gray"
         android:layout_toEndOf="@id/movie_genre"
         android:layout_below="@+id/movie_name"
@@ -91,7 +92,7 @@
         android:layout_marginBottom="12dp"
         android:background="@drawable/rounded_background"
         android:paddingHorizontal="2dp"
-        android:text="remove from favs" />
+        android:text="@string/remove_from_favs_text" />
 
     <Button
         android:id="@+id/button2"
@@ -103,7 +104,7 @@
         android:layout_marginEnd="62dp"
         android:layout_toEndOf="@+id/button"
         android:background="@drawable/rounded_background"
-        android:text="add to favs" />
+        android:text="@string/add_to_favs_text" />
 
 
 </RelativeLayout>

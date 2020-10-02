@@ -17,7 +17,7 @@ class SearchFragmentViewModel(application: Application): AndroidViewModel(applic
     val errorLiveData: LiveData<String>
         get() = _errorLiveData
     private lateinit var searchData: List<Movies>
-    var currentSearch:String? =null
+    private var currentSearch:String? =null
     private var currentPage= 1
     var page:Int = 1
     val searchAdapter = SearchAdapter(mutableListOf())
